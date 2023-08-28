@@ -1,51 +1,61 @@
 package com.novi.springbootcontroller.controllers;
 
 // TelevisionsController.java
+import com.novi.springbootcontroller.exceptions.RecordNotFoundException;
+import com.novi.springbootcontroller.exceptions.TelevisionNameTooLongException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class TelevisionsController {
-    static List<Integer> televisionDataBase = new ArrayList<>();
+    final static List<String> televisionDataBase = new ArrayList<>();
+
     static {
-        televisionDataBase.add(1111);
-        televisionDataBase.add(1112);
-        televisionDataBase.add(1113);
-        televisionDataBase.add(1114);
-        televisionDataBase.add(1115);
+        televisionDataBase.add("Sony");
+        televisionDataBase.add("LG");
+        televisionDataBase.add("Philips");
+        televisionDataBase.add("Samsung");
+        televisionDataBase.add("JVC");
+        televisionDataBase.add("Panasonic");
     }
 
     @GetMapping(value = "/televisions")
     public ResponseEntity<Object> getAllTelevisions() {
-        return ResponseEntity.ok("televisions");
+        return ResponseEntity.ok(televisionDataBase);
     }
 
     @GetMapping(value = "/televisions/{id}")
     public ResponseEntity<Object> getTelevision(@PathVariable int id) {
         ExceptionsController.checkRecordExistence(id);
-            return ResponseEntity.ok("television: " + id);
+            return ResponseEntity.ok("television: " + televisionDataBase.get(id));
     }
 
     @PostMapping("/televisions")
     public ResponseEntity<Object> addTelevision(@RequestBody String television) {
-        int id = 0;
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/televisions/{id}")
-                .buildAndExpand(id).toUri();
-        return ResponseEntity.created(location).body("television");
+        if (television.length() > 20 && !televisionDataBase.contains(television)) {
+            throw new TelevisionNameTooLongException("De naam van de televisie is te lang");
+        } else {
+            televisionDataBase.add(television);
+        }
+        return ResponseEntity.created(null).body("television");
     }
 
     @PutMapping("televisions/{id}")
     public ResponseEntity<Object> updateTelevision(@PathVariable int id, @RequestBody String television) {
+        if (televisionDataBase.size() == 0 || id > televisionDataBase.size()) {
+            throw new RecordNotFoundException("ID kon niet worden gevonden");
+        } else {
+            televisionDataBase.set(id, television);
+        }
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/televisions/{id}")
     public ResponseEntity<Object> deleteTelevision(@PathVariable int id) {
+        televisionDataBase.set(id, null);
         return ResponseEntity.noContent().build();
     }
 }
