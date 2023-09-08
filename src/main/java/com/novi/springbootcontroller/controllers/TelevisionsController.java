@@ -1,6 +1,7 @@
 package com.novi.springbootcontroller.controllers;
 
 // TelevisionsController.java
+
 import com.novi.springbootcontroller.exceptions.RecordNotFoundException;
 import com.novi.springbootcontroller.exceptions.TelevisionNameTooLongException;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +30,8 @@ public class TelevisionsController {
 
     @GetMapping(value = "/televisions/{id}")
     public ResponseEntity<Object> getTelevision(@PathVariable int id) {
-        ExceptionsController.checkRecordExistence(id);
-            return ResponseEntity.ok("television: " + televisionDataBase.get(id));
+        checkRecordExistence(id);
+        return ResponseEntity.ok("television: " + televisionDataBase.get(id));
     }
 
     @PostMapping("/televisions")
@@ -57,6 +58,16 @@ public class TelevisionsController {
     public ResponseEntity<Object> deleteTelevision(@PathVariable int id) {
         televisionDataBase.set(id, null);
         return ResponseEntity.noContent().build();
+    }
+
+    public static void checkRecordExistence(int id) {
+        if (!recordExistsInTelevisions(id)) {
+            throw new RecordNotFoundException("ID kon niet worden gevonden");
+        }
+    }
+
+    public static boolean recordExistsInTelevisions(int id) {
+        return id >= 0 && id < televisionDataBase.size();
     }
 }
 
