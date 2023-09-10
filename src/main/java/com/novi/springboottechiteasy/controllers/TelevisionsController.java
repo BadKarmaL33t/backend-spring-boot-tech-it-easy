@@ -66,7 +66,7 @@ public class TelevisionsController {
     }
 
     @PutMapping("televisions/{id}")
-    public ResponseEntity<Television> updateTelevision(@PathVariable long id, @RequestBody Television updatedTelevision) {
+    public ResponseEntity<Television> updateTelevision(@PathVariable long id, @RequestBody Television newTelevision) {
 
         Optional<Television> television = televisionRepository.findById(id);
 
@@ -74,22 +74,22 @@ public class TelevisionsController {
             throw new RecordNotFoundException("ID kon niet worden gevonden");
         } else {
             Television thisTelevision = television.get();
-            thisTelevision.setType(updatedTelevision.getType());
-            thisTelevision.setBrand(updatedTelevision.getBrand());
-            thisTelevision.setName(updatedTelevision.getName());
-            thisTelevision.setPrice(updatedTelevision.getPrice());
-            thisTelevision.setAvailableSize(updatedTelevision.getAvailableSize());
-            thisTelevision.setRefreshRate(updatedTelevision.getRefreshRate());
-            thisTelevision.setScreenType(updatedTelevision.getScreenType());
-            thisTelevision.setScreenQuality(updatedTelevision.getScreenQuality());
-            thisTelevision.setSmartTv(updatedTelevision.getSmartTv());
-            thisTelevision.setWifi(updatedTelevision.getWifi());
-            thisTelevision.setVoiceControl(updatedTelevision.getVoiceControl());
-            thisTelevision.setHdr(updatedTelevision.getHdr());
-            thisTelevision.setBluetooth(updatedTelevision.getBluetooth());
-            thisTelevision.setAmbiLight(updatedTelevision.getAmbiLight());
-            thisTelevision.setOriginalStock(updatedTelevision.getOriginalStock());
-            thisTelevision.setSold(updatedTelevision.getSold());
+            thisTelevision.setType(newTelevision.getType());
+            thisTelevision.setBrand(newTelevision.getBrand());
+            thisTelevision.setName(newTelevision.getName());
+            thisTelevision.setPrice(newTelevision.getPrice());
+            thisTelevision.setAvailableSize(newTelevision.getAvailableSize());
+            thisTelevision.setRefreshRate(newTelevision.getRefreshRate());
+            thisTelevision.setScreenType(newTelevision.getScreenType());
+            thisTelevision.setScreenQuality(newTelevision.getScreenQuality());
+            thisTelevision.setSmartTv(newTelevision.getSmartTv());
+            thisTelevision.setWifi(newTelevision.getWifi());
+            thisTelevision.setVoiceControl(newTelevision.getVoiceControl());
+            thisTelevision.setHdr(newTelevision.getHdr());
+            thisTelevision.setBluetooth(newTelevision.getBluetooth());
+            thisTelevision.setAmbiLight(newTelevision.getAmbiLight());
+            thisTelevision.setOriginalStock(newTelevision.getOriginalStock());
+            thisTelevision.setSold(newTelevision.getSold());
 
             Television saveTelevision = televisionRepository.save(thisTelevision);
 
@@ -97,12 +97,11 @@ public class TelevisionsController {
         }
     }
 
-
-//    @DeleteMapping("/televisions/{id}")
-//    public ResponseEntity<Television> deleteTelevision(@PathVariable int id) {
-//        televisionDataBase.set(id, null);
-//        return ResponseEntity.noContent().build();
-//    }
+    @DeleteMapping("/televisions/{id}")
+    public ResponseEntity<Television> deleteTelevision(@PathVariable long id) {
+        televisionRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
+}
 
 
