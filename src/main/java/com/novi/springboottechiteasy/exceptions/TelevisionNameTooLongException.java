@@ -1,4 +1,4 @@
-package com.novi.springbootcontroller.exceptions;
+package com.novi.springboottechiteasy.exceptions;
 
 public class TelevisionNameTooLongException extends RuntimeException {
     public TelevisionNameTooLongException() {

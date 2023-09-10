@@ -1,7 +1,7 @@
-package com.novi.springbootcontroller.controllers;
+package com.novi.springboottechiteasy.controllers;
 
-import com.novi.springbootcontroller.exceptions.RecordNotFoundException;
-import com.novi.springbootcontroller.exceptions.TelevisionNameTooLongException;
+import com.novi.springboottechiteasy.exceptions.RecordNotFoundException;
+import com.novi.springboottechiteasy.exceptions.TelevisionNameTooLongException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
