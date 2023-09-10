@@ -16,7 +16,10 @@ public class Television {
     private String name;
 
     private Double price;
-    private Double availableSize;
+    @ElementCollection
+    @CollectionTable(name = "available_sizes", joinColumns = @JoinColumn(name = "television_id"))
+    @Column(name = "available_size")
+    private List<Integer> availableSizes;
     private Double refreshRate;
     private String screenType;
     private String screenQuality;
@@ -39,13 +42,13 @@ public class Television {
     public Television() {
     }
 
-    public Television(Long id, String type, String brand, String name, Double price, Double availableSize, Double refreshRate, String screenType, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Date originalStockDate, Integer sold, List<Date> soldDates) {
+    public Television(Long id, String type, String brand, String name, Double price, List<Integer> availableSizes, Double refreshRate, String screenType, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Date originalStockDate, Integer sold, List<Date> soldDates) {
         this.id = id;
         this.type = type;
         this.brand = brand;
         this.name = name;
         this.price = price;
-        this.availableSize = availableSize;
+        this.availableSizes = availableSizes;
         this.refreshRate = refreshRate;
         this.screenType = screenType;
         this.screenQuality = screenQuality;
@@ -101,12 +104,12 @@ public class Television {
         this.price = price;
     }
 
-    public Double getAvailableSize() {
-        return availableSize;
+    public List<Integer> getAvailableSizes() {
+        return availableSizes;
     }
 
-    public void setAvailableSize(Double availableSize) {
-        this.availableSize = availableSize;
+    public void setAvailableSizes(List<Integer> availableSizes) {
+        this.availableSizes = availableSizes;
     }
 
     public Double getRefreshRate() {

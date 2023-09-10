@@ -78,7 +78,7 @@ public class TelevisionsController {
             thisTelevision.setBrand(newTelevision.getBrand());
             thisTelevision.setName(newTelevision.getName());
             thisTelevision.setPrice(newTelevision.getPrice());
-            thisTelevision.setAvailableSize(newTelevision.getAvailableSize());
+            thisTelevision.setAvailableSizes(newTelevision.getAvailableSizes());
             thisTelevision.setRefreshRate(newTelevision.getRefreshRate());
             thisTelevision.setScreenType(newTelevision.getScreenType());
             thisTelevision.setScreenQuality(newTelevision.getScreenQuality());
@@ -126,8 +126,8 @@ public class TelevisionsController {
             if (thisTelevision.getPrice() != null) {
                 thisTelevision.setPrice(updatedTelevision.getPrice());
             }
-            if (thisTelevision.getAvailableSize() != null) {
-                thisTelevision.setAvailableSize(updatedTelevision.getAvailableSize());
+            if (thisTelevision.getAvailableSizes() != null) {
+                thisTelevision.setAvailableSizes(updatedTelevision.getAvailableSizes());
             }
             if (thisTelevision.getRefreshRate() != null) {
                 thisTelevision.setRefreshRate(updatedTelevision.getRefreshRate());
