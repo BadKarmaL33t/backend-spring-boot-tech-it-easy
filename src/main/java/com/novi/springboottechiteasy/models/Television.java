@@ -1,9 +1,9 @@
 package com.novi.springboottechiteasy.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Television {
@@ -27,11 +27,19 @@ public class Television {
     private Boolean bluetooth;
     private Boolean ambiLight;
     private Integer originalStock;
+    @Temporal(TemporalType.DATE)
+    private Date originalStockDate;
     private Integer sold;
+    @ElementCollection
+    @Temporal(TemporalType.DATE)
+    @CollectionTable(name = "sold_dates", joinColumns = @JoinColumn(name = "television_id"))
+    @Column(name = "sold_date")
+    private List<Date> soldDates;
 
-    public Television() {}
+    public Television() {
+    }
 
-    public Television(Long id, String type, String brand, String name, Double price, Double availableSize, Double refreshRate, String screenType, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
+    public Television(Long id, String type, String brand, String name, Double price, Double availableSize, Double refreshRate, String screenType, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Date originalStockDate, Integer sold, List<Date> soldDates) {
         this.id = id;
         this.type = type;
         this.brand = brand;
@@ -48,7 +56,9 @@ public class Television {
         this.bluetooth = bluetooth;
         this.ambiLight = ambiLight;
         this.originalStock = originalStock;
+        this.originalStockDate = originalStockDate;
         this.sold = sold;
+        this.soldDates = soldDates;
     }
 
     public Long getId() {
@@ -179,6 +189,14 @@ public class Television {
         this.originalStock = originalStock;
     }
 
+    public Date getOriginalStockDate() {
+        return originalStockDate;
+    }
+
+    public void setOriginalStockDate(Date originalStockDate) {
+        this.originalStockDate = originalStockDate;
+    }
+
     public Integer getSold() {
         return sold;
     }
@@ -186,4 +204,16 @@ public class Television {
     public void setSold(Integer sold) {
         this.sold = sold;
     }
+
+    public List<Date> getSoldDates() {
+        return soldDates;
+    }
+
+    public void setSoldDates(List<Date> soldDates) {
+        this.soldDates = soldDates;
+    }
 }
+
+
+
+

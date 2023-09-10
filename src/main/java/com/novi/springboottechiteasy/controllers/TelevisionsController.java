@@ -89,7 +89,9 @@ public class TelevisionsController {
             thisTelevision.setBluetooth(newTelevision.getBluetooth());
             thisTelevision.setAmbiLight(newTelevision.getAmbiLight());
             thisTelevision.setOriginalStock(newTelevision.getOriginalStock());
+            thisTelevision.setOriginalStockDate(newTelevision.getOriginalStockDate());
             thisTelevision.setSold(newTelevision.getSold());
+            thisTelevision.setSoldDates(newTelevision.getSoldDates());
 
             Television saveTelevision = televisionRepository.save(thisTelevision);
 
@@ -157,8 +159,14 @@ public class TelevisionsController {
             if (thisTelevision.getOriginalStock() != null) {
                 thisTelevision.setOriginalStock(updatedTelevision.getOriginalStock());
             }
+            if (thisTelevision.getOriginalStockDate() != null) {
+                thisTelevision.setOriginalStockDate(updatedTelevision.getOriginalStockDate());
+            }
             if (thisTelevision.getSold() != null) {
                 thisTelevision.setSold(updatedTelevision.getSold());
+            }
+            if (thisTelevision.getSoldDates() != null) {
+                thisTelevision.setSoldDates(updatedTelevision.getSoldDates());
             }
 
                 Television saveTelevision = televisionRepository.save(thisTelevision);
