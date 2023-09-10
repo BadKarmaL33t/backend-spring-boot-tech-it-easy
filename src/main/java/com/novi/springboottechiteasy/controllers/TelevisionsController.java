@@ -66,7 +66,7 @@ public class TelevisionsController {
     }
 
     @PutMapping("televisions/{id}")
-    public ResponseEntity<Television> updateTelevision(@PathVariable long id, @RequestBody Television newTelevision) {
+    public ResponseEntity<Television> updateTelevision(@PathVariable Long id, @RequestBody Television newTelevision) {
 
         Optional<Television> television = televisionRepository.findById(id);
 
@@ -98,10 +98,74 @@ public class TelevisionsController {
     }
 
     @DeleteMapping("/televisions/{id}")
-    public ResponseEntity<Television> deleteTelevision(@PathVariable long id) {
+    public ResponseEntity<Television> deleteTelevision(@PathVariable Long id) {
         televisionRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
-}
+
+    @PatchMapping("/televisions/{id}")
+    public ResponseEntity<Television> updateTelevisionDetails(@PathVariable Long id, @RequestBody Television updatedTelevision) {
+
+        Optional<Television> television = televisionRepository.findById(id);
+
+        if (television.isEmpty()) {
+            throw new RecordNotFoundException("ID kon niet worden gevonden");
+        } else {
+            Television thisTelevision = television.get();
+            if (thisTelevision.getType() != null) {
+                thisTelevision.setType(updatedTelevision.getType());
+            }
+            if (thisTelevision.getBrand() != null) {
+                thisTelevision.setBrand(updatedTelevision.getBrand());
+            }
+            if (thisTelevision.getName() != null) {
+                thisTelevision.setName(updatedTelevision.getName());
+            }
+            if (thisTelevision.getPrice() != null) {
+                thisTelevision.setPrice(updatedTelevision.getPrice());
+            }
+            if (thisTelevision.getAvailableSize() != null) {
+                thisTelevision.setAvailableSize(updatedTelevision.getAvailableSize());
+            }
+            if (thisTelevision.getRefreshRate() != null) {
+                thisTelevision.setRefreshRate(updatedTelevision.getRefreshRate());
+            }
+            if (thisTelevision.getScreenType() != null) {
+                thisTelevision.setScreenType(updatedTelevision.getScreenType());
+            }
+            if (thisTelevision.getScreenQuality() != null) {
+                thisTelevision.setScreenQuality(updatedTelevision.getScreenQuality());
+            }
+            if (thisTelevision.getSmartTv() != null) {
+                thisTelevision.setSmartTv(updatedTelevision.getSmartTv());
+            }
+            if (thisTelevision.getWifi() != null) {
+                thisTelevision.setWifi(updatedTelevision.getWifi());
+            }
+            if (thisTelevision.getVoiceControl() != null) {
+                thisTelevision.setVoiceControl(updatedTelevision.getVoiceControl());
+            }
+            if (thisTelevision.getHdr() != null) {
+                thisTelevision.setHdr(updatedTelevision.getHdr());
+            }
+            if (thisTelevision.getBluetooth() != null) {
+                thisTelevision.setBluetooth(updatedTelevision.getBluetooth());
+            }
+            if (thisTelevision.getAmbiLight() != null) {
+                thisTelevision.setAmbiLight(updatedTelevision.getAmbiLight());
+            }
+            if (thisTelevision.getOriginalStock() != null) {
+                thisTelevision.setOriginalStock(updatedTelevision.getOriginalStock());
+            }
+            if (thisTelevision.getSold() != null) {
+                thisTelevision.setSold(updatedTelevision.getSold());
+            }
+
+                Television saveTelevision = televisionRepository.save(thisTelevision);
+
+                return ResponseEntity.ok().body(saveTelevision);
+            }
+        }
+    }
 
 
