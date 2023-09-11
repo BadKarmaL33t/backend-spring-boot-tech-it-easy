@@ -30,7 +30,6 @@ public class TelevisionInputDto {
     private Date originalStockDate;
     @PositiveOrZero(message = "Amount sold can't have a negative value")
     private Integer sold;
-    @PastOrPresent(message = "Don't assume a tv gets sold before it's really sold")
     private List<Date> soldDates;
 
 

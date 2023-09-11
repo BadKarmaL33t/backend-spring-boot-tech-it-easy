@@ -3,10 +3,12 @@ package com.novi.springboottechiteasy.controllers;
 // TelevisionsController.java
 
 import com.novi.springboottechiteasy.dtos.TelevisionDto;
+import com.novi.springboottechiteasy.dtos.TelevisionInputDto;
 import com.novi.springboottechiteasy.exceptions.RecordNotFoundException;
 import com.novi.springboottechiteasy.exceptions.TelevisionNameTooLongException;
 import com.novi.springboottechiteasy.models.Television;
 import com.novi.springboottechiteasy.services.TelevisionService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -28,43 +30,37 @@ public class TelevisionsController {
         List<TelevisionDto> televisionDtos;
         televisionDtos = televisionService.getAllTelevisions();
 
-        return ResponseEntity.ok(televisionDtos);
+        return ResponseEntity.ok().body(televisionDtos);
     }
 
     // Return 1 television with a specific id
-//    @GetMapping("/televisions/{id}")
-//    public ResponseEntity<Television> getTelevision(@PathVariable("id") Long id) {
-//        Optional<Television> television = televisionRepository.findById(id);
+    @GetMapping("/televisions/{id}")
+    public ResponseEntity<TelevisionDto> getTelevision(@PathVariable("id") Long id) {
+        TelevisionDto television = televisionService.getTelevisionById(id);
+
+        return ResponseEntity.ok().body(television);
+    }
+
+    @PostMapping("/televisions")
+    public ResponseEntity<TelevisionDto> addTelevision(@Valid @RequestBody TelevisionInputDto televisionInputDto) {
+        TelevisionDto inputDto = televisionService.addTelevision(televisionInputDto);
 //
-//        if (television.isEmpty()) {
-//            throw new RecordNotFoundException("No television found with id: " + id);
-//
-//        } else {
-//            Television televisionMatch = television.get();
-//
-//            return ResponseEntity.ok().body(televisionMatch);
-//        }
-//    }
-//
-//    @PostMapping("/televisions")
-//    public ResponseEntity<Television> addTelevision(@RequestBody Television television) {
-//        List<Television> televisions;
-//        televisions = televisionRepository.findAll();
-//
+//      Onderstaande code kan nu worden opgelost in jakarta.validation.constraints in de TelevisionInputDto class
+
 //        if (television.getName().length() > 20 && !televisions.contains(television)) {
 //            throw new TelevisionNameTooLongException("De naam van de televisie is te lang");
 //        } else {
 //            Television addedTelevision = televisionRepository.save(television);
-//
-//            URI location = ServletUriComponentsBuilder
-//                    .fromCurrentRequest()
-//                    .path("/{id}")
-//                    .buildAndExpand(addedTelevision.getId())
-//                    .toUri();
-//
-//            return ResponseEntity.created(location).body(addedTelevision);
-//        }
-//    }
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(inputDto.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(inputDto);
+    }
+
 //
 //    @PutMapping("televisions/{id}")
 //    public ResponseEntity<Television> updateTelevision(@PathVariable Long id, @RequestBody Television newTelevision) {
@@ -175,6 +171,6 @@ public class TelevisionsController {
 //                return ResponseEntity.ok().body(saveTelevision);
 //            }
 //        }
-    }
+}
 
 

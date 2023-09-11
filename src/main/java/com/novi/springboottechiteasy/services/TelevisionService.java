@@ -1,12 +1,15 @@
 package com.novi.springboottechiteasy.services;
 
 import com.novi.springboottechiteasy.dtos.TelevisionDto;
+import com.novi.springboottechiteasy.dtos.TelevisionInputDto;
+import com.novi.springboottechiteasy.exceptions.RecordNotFoundException;
 import com.novi.springboottechiteasy.models.Television;
 import com.novi.springboottechiteasy.repositories.TelevisionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TelevisionService {
@@ -25,6 +28,24 @@ public class TelevisionService {
             televisionsDtos.add(dto);
         }
         return televisionsDtos;
+    }
+
+    public TelevisionDto getTelevisionById(Long id) {
+        Optional<Television> television = televisionRepository.findById(id);
+
+        if (television.isPresent()) {
+            Television foundTv = television.get();
+
+            return transferToDto(foundTv);
+        } else {
+            throw new RecordNotFoundException("No television found with id: " + id);
+        }
+    }
+
+    public TelevisionDto addTelevision(TelevisionInputDto inputDto) {
+    Television television = transferToTelevision(inputDto);
+    televisionRepository.save(television);
+        return transferToDto(television);
     }
 
     public TelevisionDto transferToDto(Television television) {
@@ -51,5 +72,30 @@ public class TelevisionService {
         dto.setSoldDates(television.getSoldDates());
 
         return dto;
+    }
+
+    public Television transferToTelevision(TelevisionInputDto inputDto) {
+        Television tv = new Television();
+
+        tv.setType(inputDto.getType());
+        tv.setBrand(inputDto.getBrand());
+        tv.setName(inputDto.getName());
+        tv.setPrice(inputDto.getPrice());
+        tv.setAvailableSizes(inputDto.getAvailableSizes());
+        tv.setRefreshRate(inputDto.getRefreshRate());
+        tv.setScreenType(inputDto.getScreenType());
+        tv.setScreenQuality(inputDto.getScreenQuality());
+        tv.setSmartTv(inputDto.getSmartTv());
+        tv.setWifi(inputDto.getWifi());
+        tv.setVoiceControl(inputDto.getVoiceControl());
+        tv.setHdr(inputDto.getHdr());
+        tv.setBluetooth(inputDto.getBluetooth());
+        tv.setAmbiLight(inputDto.getAmbiLight());
+        tv.setOriginalStock(inputDto.getOriginalStock());
+        tv.setOriginalStockDate(inputDto.getOriginalStockDate());
+        tv.setSold(inputDto.getSold());
+        tv.setSoldDates(inputDto.getSoldDates());
+
+        return tv;
     }
 }
