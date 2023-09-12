@@ -40,13 +40,6 @@ public class TelevisionsController {
     public ResponseEntity<TelevisionDto> addTelevision(@Valid @RequestBody TelevisionInputDto televisionInputDto) {
         TelevisionDto dto = televisionService.addTelevision(televisionInputDto);
 
-//      Onderstaande code kan nu worden opgelost in jakarta.validation.constraints in de TelevisionInputDto class
-
-//        if (television.getName().length() > 20 && !televisions.contains(television)) {
-//            throw new TelevisionNameTooLongException("De naam van de televisie is te lang");
-//        } else {
-//            Television addedTelevision = televisionRepository.save(television);
-
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
