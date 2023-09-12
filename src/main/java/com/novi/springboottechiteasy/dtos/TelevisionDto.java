@@ -1,6 +1,7 @@
 package com.novi.springboottechiteasy.dtos;
 
-import jakarta.persistence.*;
+import com.novi.springboottechiteasy.models.ScreenSize;
+import com.novi.springboottechiteasy.models.SoldDate;
 
 import java.util.Date;
 import java.util.List;
@@ -12,7 +13,7 @@ public class TelevisionDto {
     private String brand;
     private String name;
     private Double price;
-    private List<Integer> availableSizes;
+    private List<ScreenSize> availableSizes;
     private Double refreshRate;
     private String screenType;
     private String screenQuality;
@@ -25,7 +26,8 @@ public class TelevisionDto {
     private Integer originalStock;
     private Date originalStockDate;
     private Integer sold;
-    private List<Date> soldDates;
+    private List<SoldDate> soldDates;
+
 
     public Long getId() {
         return id;
@@ -35,13 +37,9 @@ public class TelevisionDto {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
-    }
+    public String getType() { return type; }
 
-    public void setType(String type) {
-        this.type = type;
-    }
+    public void setType(String type) { this.type = type; }
 
     public String getBrand() {
         return brand;
@@ -67,11 +65,11 @@ public class TelevisionDto {
         this.price = price;
     }
 
-    public List<Integer> getAvailableSizes() {
+    public List<ScreenSize> getAvailableSizes() {
         return availableSizes;
     }
 
-    public void setAvailableSizes(List<Integer> availableSizes) {
+    public void setAvailableSizes(List<ScreenSize> availableSizes) {
         this.availableSizes = availableSizes;
     }
 
@@ -171,11 +169,11 @@ public class TelevisionDto {
         this.sold = sold;
     }
 
-    public List<Date> getSoldDates() {
+    public List<SoldDate> getSoldDates() {
         return soldDates;
     }
 
-    public void setSoldDates(List<Date> soldDates) {
+    public void setSoldDates(List<SoldDate> soldDates) {
         this.soldDates = soldDates;
     }
 }

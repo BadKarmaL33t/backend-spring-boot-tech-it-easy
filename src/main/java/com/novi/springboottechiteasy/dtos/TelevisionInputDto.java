@@ -1,5 +1,7 @@
 package com.novi.springboottechiteasy.dtos;
 
+import com.novi.springboottechiteasy.models.ScreenSize;
+import com.novi.springboottechiteasy.models.SoldDate;
 import jakarta.validation.constraints.*;
 
 import java.util.Date;
@@ -15,7 +17,7 @@ public class TelevisionInputDto {
     private String name;
     @Positive(message = "Tv price can't be 0")
     private Double price;
-    private List<Integer> availableSizes;
+    private List<ScreenSize> availableSizes;
     private Double refreshRate;
     private String screenType;
     private String screenQuality;
@@ -30,7 +32,7 @@ public class TelevisionInputDto {
     private Date originalStockDate;
     @PositiveOrZero(message = "Amount sold can't have a negative value")
     private Integer sold;
-    private List<Date> soldDates;
+    private List<SoldDate> soldDates;
 
 
     public String getType() {
@@ -65,11 +67,11 @@ public class TelevisionInputDto {
         this.price = price;
     }
 
-    public List<Integer> getAvailableSizes() {
+    public List<ScreenSize> getAvailableSizes() {
         return availableSizes;
     }
 
-    public void setAvailableSizes(List<Integer> availableSizes) {
+    public void setAvailableSizes(List<ScreenSize> availableSizes) {
         this.availableSizes = availableSizes;
     }
 
@@ -169,11 +171,11 @@ public class TelevisionInputDto {
         this.sold = sold;
     }
 
-    public List<Date> getSoldDates() {
+    public List<SoldDate> getSoldDates() {
         return soldDates;
     }
 
-    public void setSoldDates(List<Date> soldDates) {
+    public void setSoldDates(List<SoldDate> soldDates) {
         this.soldDates = soldDates;
     }
 }

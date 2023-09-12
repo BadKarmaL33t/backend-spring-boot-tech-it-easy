@@ -15,10 +15,10 @@ public class ExceptionsController {
             return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
         }
 
-        @ExceptionHandler(value = IndexOutOfBoundsException.class)
-        public ResponseEntity<String> exception(IndexOutOfBoundsException exception) {
-            return new ResponseEntity<>("ID couldn't be found in the database", HttpStatus.NOT_FOUND);
-        }
+//        @ExceptionHandler(value = IndexOutOfBoundsException.class)
+//        public ResponseEntity<String> exception(IndexOutOfBoundsException exception) {
+//            return new ResponseEntity<>("ID couldn't be found in the database", HttpStatus.NOT_FOUND);
+//        }
 
         @ExceptionHandler(value = TelevisionNameTooLongException.class)
         public ResponseEntity<String> exception(TelevisionNameTooLongException exception) {

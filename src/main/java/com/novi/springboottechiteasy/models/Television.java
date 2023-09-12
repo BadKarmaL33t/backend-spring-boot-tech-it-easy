@@ -16,10 +16,8 @@ public class Television {
     private String name;
 
     private Double price;
-    @ElementCollection
-    @CollectionTable(name = "available_sizes", joinColumns = @JoinColumn(name = "television_id"))
-    @Column(name = "available_size")
-    private List<Integer> availableSizes;
+    @OneToMany(mappedBy = "television")
+    private List<ScreenSize> availableSizes;
     private Double refreshRate;
     private String screenType;
     private String screenQuality;
@@ -33,16 +31,33 @@ public class Television {
     @Temporal(TemporalType.DATE)
     private Date originalStockDate;
     private Integer sold;
-    @ElementCollection
     @Temporal(TemporalType.DATE)
-    @CollectionTable(name = "sold_dates", joinColumns = @JoinColumn(name = "television_id"))
-    @Column(name = "sold_date")
-    private List<Date> soldDates;
+    @OneToMany(mappedBy = "television")
+    private List<SoldDate> soldDates;
 
     public Television() {
     }
 
-    public Television(Long id, String type, String brand, String name, Double price, List<Integer> availableSizes, Double refreshRate, String screenType, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Date originalStockDate, Integer sold, List<Date> soldDates) {
+    public Television(
+            Long id,
+            String type,
+            String brand,
+            String name,
+            Double price,
+            List<ScreenSize> availableSizes,
+            Double refreshRate,
+            String screenType,
+            String screenQuality,
+            Boolean smartTv,
+            Boolean wifi,
+            Boolean voiceControl,
+            Boolean hdr,
+            Boolean bluetooth,
+            Boolean ambiLight,
+            Integer originalStock,
+            Date originalStockDate,
+            Integer sold,
+            List<SoldDate> soldDates) {
         this.id = id;
         this.type = type;
         this.brand = brand;
@@ -66,10 +81,6 @@ public class Television {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getType() {
@@ -104,17 +115,15 @@ public class Television {
         this.price = price;
     }
 
-    public List<Integer> getAvailableSizes() {
+    public List<ScreenSize> getAvailableSizes() {
         return availableSizes;
     }
 
-    public void setAvailableSizes(List<Integer> availableSizes) {
+    public void setAvailableSizes(List<ScreenSize> availableSizes) {
         this.availableSizes = availableSizes;
     }
 
-    public Double getRefreshRate() {
-        return refreshRate;
-    }
+    public Double getRefreshRate() { return refreshRate; }
 
     public void setRefreshRate(Double refreshRate) {
         this.refreshRate = refreshRate;
@@ -208,15 +217,11 @@ public class Television {
         this.sold = sold;
     }
 
-    public List<Date> getSoldDates() {
+    public List<SoldDate> getSoldDates() {
         return soldDates;
     }
 
-    public void setSoldDates(List<Date> soldDates) {
+    public void setSoldDates(List<SoldDate> soldDates) {
         this.soldDates = soldDates;
     }
 }
-
-
-
-

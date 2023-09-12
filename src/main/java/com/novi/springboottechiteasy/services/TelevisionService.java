@@ -5,7 +5,6 @@ import com.novi.springboottechiteasy.dtos.TelevisionInputDto;
 import com.novi.springboottechiteasy.exceptions.RecordNotFoundException;
 import com.novi.springboottechiteasy.models.Television;
 import com.novi.springboottechiteasy.repositories.TelevisionRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

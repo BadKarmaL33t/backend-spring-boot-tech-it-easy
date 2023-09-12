@@ -10,7 +10,7 @@ VALUES
     ( 'B2450HD', 'Brandt', 'LED TV', 109, 60, 'LED', 'Full HD', false, false, false, false, false, false, 10, '2023-01-01', 2),
     ( '32WL1A63DG', 'Toshiba', 'HD TV', 161, 50, 'LED', 'Full HD', false, false, false, true, false, false, 10, '2023-01-01', 2);
 
-INSERT INTO sold_dates(sold_date, television_id)
+INSERT INTO sold_date(sold_date, television_id)
 VALUES
     ('2023-02-01', 1),
     ('2023-03-01', 1),
@@ -29,7 +29,7 @@ VALUES
     ('2023-02-01', 8),
     ('2023-03-01', 8);
 
-INSERT INTO available_sizes(available_size, television_id)
+INSERT INTO screen_size(available_size, television_id)
 VALUES
     (55, 1),
     (65, 1),
