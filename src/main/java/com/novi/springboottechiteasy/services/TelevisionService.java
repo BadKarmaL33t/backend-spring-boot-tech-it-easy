@@ -183,7 +183,7 @@ public class TelevisionService {
     }
 
     public Television transferToTelevision(TelevisionInputDto inputDto) {
-        Television tv = new Television(remoteController, module, wallBrackets);
+        Television tv = new Television();
 
         tv.setType(inputDto.getType());
         tv.setBrand(inputDto.getBrand());
