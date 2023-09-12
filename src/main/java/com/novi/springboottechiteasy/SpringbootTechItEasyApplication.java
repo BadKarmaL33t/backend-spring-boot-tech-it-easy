@@ -1,13 +1,13 @@
-package com.novi.springbootcontroller;
+package com.novi.springboottechiteasy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringbootControllerApplication {
+public class SpringbootTechItEasyApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringbootControllerApplication.class, args);
+		SpringApplication.run(SpringbootTechItEasyApplication.class, args);
 	}
 
 }
