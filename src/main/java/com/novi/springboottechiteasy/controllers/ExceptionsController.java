@@ -17,7 +17,7 @@ public class ExceptionsController {
 
         @ExceptionHandler(value = IndexOutOfBoundsException.class)
         public ResponseEntity<String> exception(IndexOutOfBoundsException exception) {
-            return new ResponseEntity<>("ID is niet bekend in de database", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("ID couldn't be found in the database", HttpStatus.NOT_FOUND);
         }
 
         @ExceptionHandler(value = TelevisionNameTooLongException.class)

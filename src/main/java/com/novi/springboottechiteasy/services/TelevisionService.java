@@ -5,6 +5,7 @@ import com.novi.springboottechiteasy.dtos.TelevisionInputDto;
 import com.novi.springboottechiteasy.exceptions.RecordNotFoundException;
 import com.novi.springboottechiteasy.models.Television;
 import com.novi.springboottechiteasy.repositories.TelevisionRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -84,6 +85,76 @@ public class TelevisionService {
 
     public void deleteTelevision(Long id) {
         televisionRepository.deleteById(id);
+    }
+
+    public TelevisionDto updateTelevisionDetails(Long id, TelevisionInputDto updatedTelevision) {
+        Optional<Television> television = televisionRepository.findById(id);
+
+        if (television.isPresent()) {
+
+            Television thisTelevision = television.get();
+            if (thisTelevision.getType() != null) {
+                thisTelevision.setType(updatedTelevision.getType());
+            }
+            if (thisTelevision.getBrand() != null) {
+                thisTelevision.setBrand(updatedTelevision.getBrand());
+            }
+            if (thisTelevision.getName() != null) {
+                thisTelevision.setName(updatedTelevision.getName());
+            }
+            if (thisTelevision.getPrice() != null) {
+                thisTelevision.setPrice(updatedTelevision.getPrice());
+            }
+            if (thisTelevision.getAvailableSizes() != null) {
+                thisTelevision.setAvailableSizes(updatedTelevision.getAvailableSizes());
+            }
+            if (thisTelevision.getRefreshRate() != null) {
+                thisTelevision.setRefreshRate(updatedTelevision.getRefreshRate());
+            }
+            if (thisTelevision.getScreenType() != null) {
+                thisTelevision.setScreenType(updatedTelevision.getScreenType());
+            }
+            if (thisTelevision.getScreenQuality() != null) {
+                thisTelevision.setScreenQuality(updatedTelevision.getScreenQuality());
+            }
+            if (thisTelevision.getSmartTv() != null) {
+                thisTelevision.setSmartTv(updatedTelevision.getSmartTv());
+            }
+            if (thisTelevision.getWifi() != null) {
+                thisTelevision.setWifi(updatedTelevision.getWifi());
+            }
+            if (thisTelevision.getVoiceControl() != null) {
+                thisTelevision.setVoiceControl(updatedTelevision.getVoiceControl());
+            }
+            if (thisTelevision.getHdr() != null) {
+                thisTelevision.setHdr(updatedTelevision.getHdr());
+            }
+            if (thisTelevision.getBluetooth() != null) {
+                thisTelevision.setBluetooth(updatedTelevision.getBluetooth());
+            }
+            if (thisTelevision.getAmbiLight() != null) {
+                thisTelevision.setAmbiLight(updatedTelevision.getAmbiLight());
+            }
+            if (thisTelevision.getOriginalStock() != null) {
+                thisTelevision.setOriginalStock(updatedTelevision.getOriginalStock());
+            }
+            if (thisTelevision.getOriginalStockDate() != null) {
+                thisTelevision.setOriginalStockDate(updatedTelevision.getOriginalStockDate());
+            }
+            if (thisTelevision.getSold() != null) {
+                thisTelevision.setSold(updatedTelevision.getSold());
+            }
+            if (thisTelevision.getSoldDates() != null) {
+                thisTelevision.setSoldDates(updatedTelevision.getSoldDates());
+            }
+
+            Television saveTelevision = televisionRepository.save(thisTelevision);
+
+            return transferToDto(saveTelevision);
+
+        } else {
+            throw new RecordNotFoundException("No television found with id: " + id);
+        }
     }
 
     public TelevisionDto transferToDto(Television television) {
