@@ -34,6 +34,20 @@ public class Television {
     @Temporal(TemporalType.DATE)
     @OneToMany(mappedBy = "television")
     private List<SoldDate> soldDates;
+    @OneToOne(cascade = CascadeType.ALL)
+    // Placeholder; zo lang de data.sql niet gevuld is blijft de waarde in de kolom null, dus zou de app niet starten.
+//    @JoinColumn(nullable = false)
+    RemoteController remoteController;
+    @ManyToOne
+    @JoinColumn(name = "module_id")
+    CiModule module;
+    @ManyToMany
+    @JoinTable(
+            name = "television_brackets",
+            joinColumns = @JoinColumn(name = "bracket_id"),
+            inverseJoinColumns = @JoinColumn(name = "television_id")
+    )
+    List<WallBracket> wall_brackets;
 
     public Television() {
     }
@@ -123,7 +137,9 @@ public class Television {
         this.availableSizes = availableSizes;
     }
 
-    public Double getRefreshRate() { return refreshRate; }
+    public Double getRefreshRate() {
+        return refreshRate;
+    }
 
     public void setRefreshRate(Double refreshRate) {
         this.refreshRate = refreshRate;
