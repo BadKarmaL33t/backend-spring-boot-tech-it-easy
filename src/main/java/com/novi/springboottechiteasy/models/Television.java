@@ -37,17 +37,18 @@ public class Television {
     @OneToOne(cascade = CascadeType.ALL)
     // Placeholder; zo lang de data.sql niet gevuld is blijft de waarde in de kolom null, dus zou de app niet starten.
 //    @JoinColumn(nullable = false)
-    RemoteController remoteController;
+    private RemoteController remoteController;
     @ManyToOne
     @JoinColumn(name = "module_id")
-    CiModule module;
+    private CiModule module;
     @ManyToMany
     @JoinTable(
             name = "television_brackets",
             joinColumns = @JoinColumn(name = "bracket_id"),
             inverseJoinColumns = @JoinColumn(name = "television_id")
     )
-    List<WallBracket> wallBrackets;
+    private List<WallBracket> wallBrackets;
+
 
 //    public Television() {
 //    }
@@ -240,4 +241,16 @@ public class Television {
     public void setSoldDates(List<SoldDate> soldDates) {
         this.soldDates = soldDates;
     }
+
+    public RemoteController getRemoteController() {return remoteController;}
+
+    public void setRemoteController(RemoteController remoteController) {this.remoteController = remoteController;}
+
+    public CiModule getModule() {return module;}
+
+    public void setModule(CiModule module) {this.module = module;}
+
+    public List<WallBracket> getWallBrackets() {return wallBrackets;}
+
+    public void setWallBrackets(List<WallBracket> wallBrackets) {this.wallBrackets = wallBrackets;}
 }

@@ -1,7 +1,6 @@
-package com.novi.springboottechiteasy.dtos;
+package com.novi.springboottechiteasy.dtos.televisiondtos;
 
-import com.novi.springboottechiteasy.models.ScreenSize;
-import com.novi.springboottechiteasy.models.SoldDate;
+import com.novi.springboottechiteasy.models.*;
 
 import java.util.Date;
 import java.util.List;
@@ -27,7 +26,9 @@ public class TelevisionDto {
     private Date originalStockDate;
     private Integer sold;
     private List<SoldDate> soldDates;
-
+    private RemoteController remoteController;
+    private CiModule module;
+    private List<WallBracket> wallBrackets;
 
     public Long getId() {
         return id;
@@ -37,9 +38,13 @@ public class TelevisionDto {
         this.id = id;
     }
 
-    public String getType() { return type; }
+    public String getType() {
+        return type;
+    }
 
-    public void setType(String type) { this.type = type; }
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getBrand() {
         return brand;
@@ -176,4 +181,16 @@ public class TelevisionDto {
     public void setSoldDates(List<SoldDate> soldDates) {
         this.soldDates = soldDates;
     }
+
+    public RemoteController getRemoteController() {return remoteController;}
+
+    public void setRemoteController(RemoteController remoteController) {this.remoteController = remoteController;}
+
+    public CiModule getModule() {return module;}
+
+    public void setModule(CiModule module) {this.module = module;}
+
+    public List<WallBracket> getWallBrackets() {return wallBrackets;}
+
+    public void setWallBrackets(List<WallBracket> wallBrackets) {this.wallBrackets = wallBrackets;}
 }

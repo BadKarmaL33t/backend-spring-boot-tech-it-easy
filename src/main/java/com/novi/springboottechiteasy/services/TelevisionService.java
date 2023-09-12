@@ -1,7 +1,7 @@
 package com.novi.springboottechiteasy.services;
 
-import com.novi.springboottechiteasy.dtos.TelevisionDto;
-import com.novi.springboottechiteasy.dtos.TelevisionInputDto;
+import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionDto;
+import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionInputDto;
 import com.novi.springboottechiteasy.exceptions.RecordNotFoundException;
 import com.novi.springboottechiteasy.models.Television;
 import com.novi.springboottechiteasy.repositories.TelevisionRepository;
@@ -183,7 +183,7 @@ public class TelevisionService {
     }
 
     public Television transferToTelevision(TelevisionInputDto inputDto) {
-        Television tv = new Television();
+        Television tv = new Television(remoteController, module, wallBrackets);
 
         tv.setType(inputDto.getType());
         tv.setBrand(inputDto.getBrand());

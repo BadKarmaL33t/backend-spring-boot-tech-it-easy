@@ -1,7 +1,7 @@
 package com.novi.springboottechiteasy.controllers;
 
-import com.novi.springboottechiteasy.dtos.TelevisionDto;
-import com.novi.springboottechiteasy.dtos.TelevisionInputDto;
+import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionDto;
+import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionInputDto;
 import com.novi.springboottechiteasy.models.Television;
 import com.novi.springboottechiteasy.services.TelevisionService;
 import jakarta.validation.Valid;

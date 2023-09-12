@@ -1,7 +1,6 @@
-package com.novi.springboottechiteasy.dtos;
+package com.novi.springboottechiteasy.dtos.televisiondtos;
 
-import com.novi.springboottechiteasy.models.ScreenSize;
-import com.novi.springboottechiteasy.models.SoldDate;
+import com.novi.springboottechiteasy.models.*;
 import jakarta.validation.constraints.*;
 
 import java.util.Date;
@@ -9,6 +8,9 @@ import java.util.List;
 
 public class TelevisionInputDto {
     // id is geen input door generatedValue, dus die hoort er niet bij!
+
+    // validaties later verder aanvullen en testen.
+
     @NotNull(message = "Tv type is required")
     private String type;
     @NotNull(message = "Tv brand is required")
@@ -33,6 +35,9 @@ public class TelevisionInputDto {
     @PositiveOrZero(message = "Amount sold can't have a negative value")
     private Integer sold;
     private List<SoldDate> soldDates;
+    private RemoteController remoteController;
+    private CiModule module;
+    private List<WallBracket> wallBrackets;
 
 
     public String getType() {
@@ -178,4 +183,16 @@ public class TelevisionInputDto {
     public void setSoldDates(List<SoldDate> soldDates) {
         this.soldDates = soldDates;
     }
+
+    public RemoteController getRemoteController() {return remoteController;}
+
+    public void setRemoteController(RemoteController remoteController) {this.remoteController = remoteController;}
+
+    public CiModule getModule() {return module;}
+
+    public void setModule(CiModule module) {this.module = module;}
+
+    public List<WallBracket> getWallBrackets() {return wallBrackets;}
+
+    public void setWallBrackets(List<WallBracket> wallBrackets) {this.wallBrackets = wallBrackets;}
 }
