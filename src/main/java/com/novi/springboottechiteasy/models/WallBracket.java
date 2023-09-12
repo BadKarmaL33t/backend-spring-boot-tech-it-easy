@@ -13,24 +13,24 @@ public class WallBracket {
     private Boolean adjustable;
     private String name;
     private Double price;
-    @ManyToMany(mappedBy = "wall_brackets")
-    List<Television> compatibleTelevisions;
+    @ManyToMany(mappedBy = "wallBrackets")
+    private List<Television> compatibleTelevisions;
 
-    public WallBracket() {
-    }
-
-    public WallBracket(
-            Long id,
-            String size,
-            Boolean adjustable,
-            String name,
-            Double price) {
-        this.id = id;
-        this.size = size;
-        this.adjustable = adjustable;
-        this.name = name;
-        this.price = price;
-    }
+//    public WallBracket() {
+//    }
+//
+//    public WallBracket(
+//            Long id,
+//            String size,
+//            Boolean adjustable,
+//            String name,
+//            Double price) {
+//        this.id = id;
+//        this.size = size;
+//        this.adjustable = adjustable;
+//        this.name = name;
+//        this.price = price;
+//    }
 
     public Long getId() {
         return id;

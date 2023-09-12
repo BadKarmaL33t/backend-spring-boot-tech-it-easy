@@ -47,51 +47,51 @@ public class Television {
             joinColumns = @JoinColumn(name = "bracket_id"),
             inverseJoinColumns = @JoinColumn(name = "television_id")
     )
-    List<WallBracket> wall_brackets;
+    List<WallBracket> wallBrackets;
 
-    public Television() {
-    }
-
-    public Television(
-            Long id,
-            String type,
-            String brand,
-            String name,
-            Double price,
-            List<ScreenSize> availableSizes,
-            Double refreshRate,
-            String screenType,
-            String screenQuality,
-            Boolean smartTv,
-            Boolean wifi,
-            Boolean voiceControl,
-            Boolean hdr,
-            Boolean bluetooth,
-            Boolean ambiLight,
-            Integer originalStock,
-            Date originalStockDate,
-            Integer sold,
-            List<SoldDate> soldDates) {
-        this.id = id;
-        this.type = type;
-        this.brand = brand;
-        this.name = name;
-        this.price = price;
-        this.availableSizes = availableSizes;
-        this.refreshRate = refreshRate;
-        this.screenType = screenType;
-        this.screenQuality = screenQuality;
-        this.smartTv = smartTv;
-        this.wifi = wifi;
-        this.voiceControl = voiceControl;
-        this.hdr = hdr;
-        this.bluetooth = bluetooth;
-        this.ambiLight = ambiLight;
-        this.originalStock = originalStock;
-        this.originalStockDate = originalStockDate;
-        this.sold = sold;
-        this.soldDates = soldDates;
-    }
+//    public Television() {
+//    }
+//
+//    public Television(
+//            Long id,
+//            String type,
+//            String brand,
+//            String name,
+//            Double price,
+//            List<ScreenSize> availableSizes,
+//            Double refreshRate,
+//            String screenType,
+//            String screenQuality,
+//            Boolean smartTv,
+//            Boolean wifi,
+//            Boolean voiceControl,
+//            Boolean hdr,
+//            Boolean bluetooth,
+//            Boolean ambiLight,
+//            Integer originalStock,
+//            Date originalStockDate,
+//            Integer sold,
+//            List<SoldDate> soldDates) {
+//        this.id = id;
+//        this.type = type;
+//        this.brand = brand;
+//        this.name = name;
+//        this.price = price;
+//        this.availableSizes = availableSizes;
+//        this.refreshRate = refreshRate;
+//        this.screenType = screenType;
+//        this.screenQuality = screenQuality;
+//        this.smartTv = smartTv;
+//        this.wifi = wifi;
+//        this.voiceControl = voiceControl;
+//        this.hdr = hdr;
+//        this.bluetooth = bluetooth;
+//        this.ambiLight = ambiLight;
+//        this.originalStock = originalStock;
+//        this.originalStockDate = originalStockDate;
+//        this.sold = sold;
+//        this.soldDates = soldDates;
+//    }
 
     public Long getId() {
         return id;

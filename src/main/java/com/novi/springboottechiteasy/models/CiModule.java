@@ -17,22 +17,22 @@ public class CiModule {
     private Double price;
 
     @OneToMany(mappedBy = "module")
-    List<Television> compatibleTelevisions;
+    private List<Television> compatibleTelevisions;
 
-    public CiModule() {
-    }
-
-    public CiModule(
-            Long id,
-            String brand,
-            String type,
-            Double price) {
-
-        this.id = id;
-        this.brand = brand;
-        this.type = type;
-        this.price = price;
-    }
+//    public CiModule() {
+//    }
+//
+//    public CiModule(
+//            Long id,
+//            String brand,
+//            String type,
+//            Double price) {
+//
+//        this.id = id;
+//        this.brand = brand;
+//        this.type = type;
+//        this.price = price;
+//    }
 
     public Long getId() {
         return id;
