@@ -61,47 +61,20 @@ public class TelevisionsController {
         return ResponseEntity.created(location).body(inputDto);
     }
 
-//
-//    @PutMapping("televisions/{id}")
-//    public ResponseEntity<Television> updateTelevision(@PathVariable Long id, @RequestBody Television newTelevision) {
-//
-//        Optional<Television> television = televisionRepository.findById(id);
-//
-//        if (television.isEmpty()) {
-//            throw new RecordNotFoundException("ID kon niet worden gevonden");
-//        } else {
-//            Television thisTelevision = television.get();
-//            thisTelevision.setType(newTelevision.getType());
-//            thisTelevision.setBrand(newTelevision.getBrand());
-//            thisTelevision.setName(newTelevision.getName());
-//            thisTelevision.setPrice(newTelevision.getPrice());
-//            thisTelevision.setAvailableSizes(newTelevision.getAvailableSizes());
-//            thisTelevision.setRefreshRate(newTelevision.getRefreshRate());
-//            thisTelevision.setScreenType(newTelevision.getScreenType());
-//            thisTelevision.setScreenQuality(newTelevision.getScreenQuality());
-//            thisTelevision.setSmartTv(newTelevision.getSmartTv());
-//            thisTelevision.setWifi(newTelevision.getWifi());
-//            thisTelevision.setVoiceControl(newTelevision.getVoiceControl());
-//            thisTelevision.setHdr(newTelevision.getHdr());
-//            thisTelevision.setBluetooth(newTelevision.getBluetooth());
-//            thisTelevision.setAmbiLight(newTelevision.getAmbiLight());
-//            thisTelevision.setOriginalStock(newTelevision.getOriginalStock());
-//            thisTelevision.setOriginalStockDate(newTelevision.getOriginalStockDate());
-//            thisTelevision.setSold(newTelevision.getSold());
-//            thisTelevision.setSoldDates(newTelevision.getSoldDates());
-//
-//            Television saveTelevision = televisionRepository.save(thisTelevision);
-//
-//            return ResponseEntity.ok().body(saveTelevision);
-//        }
-//    }
-//
-//    @DeleteMapping("/televisions/{id}")
-//    public ResponseEntity<Television> deleteTelevision(@PathVariable Long id) {
-//        televisionRepository.deleteById(id);
-//        return ResponseEntity.noContent().build();
-//    }
-//
+    @PutMapping("televisions/{id}")
+    public ResponseEntity<TelevisionDto> updateTelevision(@PathVariable Long id, @Valid @RequestBody TelevisionInputDto newTelevision) {
+        TelevisionDto inputDto = televisionService.updateTelevision(id, newTelevision);
+
+        return ResponseEntity.ok().body(inputDto);
+    }
+
+    @DeleteMapping("/televisions/{id}")
+    public ResponseEntity<Television> deleteTelevision(@PathVariable Long id) {
+        televisionService.deleteTelevision(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
 //    @PatchMapping("/televisions/{id}")
 //    public ResponseEntity<Television> updateTelevisionDetails(@PathVariable Long id, @RequestBody Television updatedTelevision) {
 //

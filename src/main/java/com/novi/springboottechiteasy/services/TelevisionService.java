@@ -43,9 +43,47 @@ public class TelevisionService {
     }
 
     public TelevisionDto addTelevision(TelevisionInputDto inputDto) {
-    Television television = transferToTelevision(inputDto);
-    televisionRepository.save(television);
+        Television television = transferToTelevision(inputDto);
+        televisionRepository.save(television);
         return transferToDto(television);
+    }
+
+    public TelevisionDto updateTelevision(Long id, TelevisionInputDto newTelevision) {
+        Optional<Television> television = televisionRepository.findById(id);
+
+        if (television.isPresent()) {
+
+            Television thisTelevision = television.get();
+            thisTelevision.setType(newTelevision.getType());
+            thisTelevision.setBrand(newTelevision.getBrand());
+            thisTelevision.setName(newTelevision.getName());
+            thisTelevision.setPrice(newTelevision.getPrice());
+            thisTelevision.setAvailableSizes(newTelevision.getAvailableSizes());
+            thisTelevision.setRefreshRate(newTelevision.getRefreshRate());
+            thisTelevision.setScreenType(newTelevision.getScreenType());
+            thisTelevision.setScreenQuality(newTelevision.getScreenQuality());
+            thisTelevision.setSmartTv(newTelevision.getSmartTv());
+            thisTelevision.setWifi(newTelevision.getWifi());
+            thisTelevision.setVoiceControl(newTelevision.getVoiceControl());
+            thisTelevision.setHdr(newTelevision.getHdr());
+            thisTelevision.setBluetooth(newTelevision.getBluetooth());
+            thisTelevision.setAmbiLight(newTelevision.getAmbiLight());
+            thisTelevision.setOriginalStock(newTelevision.getOriginalStock());
+            thisTelevision.setOriginalStockDate(newTelevision.getOriginalStockDate());
+            thisTelevision.setSold(newTelevision.getSold());
+            thisTelevision.setSoldDates(newTelevision.getSoldDates());
+
+            Television saveTelevision = televisionRepository.save(thisTelevision);
+
+            return transferToDto(saveTelevision);
+
+        } else {
+            throw new RecordNotFoundException("No television found with id: " + id);
+        }
+    }
+
+    public void deleteTelevision(Long id) {
+        televisionRepository.deleteById(id);
     }
 
     public TelevisionDto transferToDto(Television television) {
