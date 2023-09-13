@@ -47,7 +47,7 @@ public class Television {
             joinColumns = @JoinColumn(name = "bracket_id"),
             inverseJoinColumns = @JoinColumn(name = "television_id")
     )
-    private List<WallBracket> wallBrackets;
+    List<WallBracket> wallBrackets;
 
 
     public Television() {

@@ -110,7 +110,6 @@ public class RemoteControllerService {
         }
     }
 
-
     public RemoteControllerDto transferToDto(RemoteController remote) {
         RemoteControllerDto dto = new RemoteControllerDto();
 
@@ -120,7 +119,6 @@ public class RemoteControllerService {
         dto.setName(remote.getName());
         dto.setPrice(remote.getPrice());
         dto.setOriginalStock(remote.getOriginalStock());
-        dto.setTelevision(remote.getTelevision());
 
         return dto;
     }
@@ -133,7 +131,6 @@ public class RemoteControllerService {
         remote.setName(inputDto.getName());
         remote.setPrice(inputDto.getPrice());
         remote.setOriginalStock(inputDto.getOriginalStock());
-        remote.setTelevision(inputDto.getTelevision());
 
         return remote;
     }

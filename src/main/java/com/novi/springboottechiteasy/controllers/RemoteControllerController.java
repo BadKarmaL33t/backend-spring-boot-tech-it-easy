@@ -2,10 +2,7 @@ package com.novi.springboottechiteasy.controllers;
 
 import com.novi.springboottechiteasy.dtos.remotecontrollerdtos.RemoteControllerDto;
 import com.novi.springboottechiteasy.dtos.remotecontrollerdtos.RemoteControllerInputDto;
-import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionDto;
-import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionInputDto;
 import com.novi.springboottechiteasy.models.RemoteController;
-import com.novi.springboottechiteasy.models.Television;
 import com.novi.springboottechiteasy.services.RemoteControllerService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
