@@ -1,5 +1,6 @@
 package com.novi.springboottechiteasy.controllers;
 
+import com.novi.springboottechiteasy.dtos.id.IdInputDto;
 import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionDto;
 import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionInputDto;
 import com.novi.springboottechiteasy.models.Television;
@@ -54,6 +55,13 @@ public class TelevisionsController {
         TelevisionDto dto = televisionService.updateTelevision(id, newTelevision);
 
         return ResponseEntity.ok().body(dto);
+    }
+
+    @PutMapping("televisions/{id}/remote-controller")
+    public ResponseEntity<TelevisionDto> assignRemoteControllerToTelevision(@PathVariable Long id, @Valid @RequestBody IdInputDto idInput) {
+        televisionService.assignRemoteControllerToTelevision(id, idInput.getId());
+
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/televisions/{id}")

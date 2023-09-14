@@ -1,14 +1,14 @@
 
 INSERT INTO remote_controller(compatible_with, battery_type, name, price, original_stock)
 VALUES
-    ('RC123', 'AAA', 'Philips Remote 1', 20.99, 20),
-    ('RC123', 'AAA', 'Nikkei Basic Remote', 19.99, 20),
-    ('RC123', 'AA', 'Samsung Smart Remote 1', 29.99, 20),
-    ('RC123', 'AAA', 'Hitachi Basic Remote', 20.00, 20),
-    ('RC123', 'AA', 'Philips Smart Remote 1', 27.95, 20),
-    ('RC123', 'AA', 'Philips Smart Remote X', 24.95, 20),
-    ('RC123', 'AAA', 'Brandt Remote', 14.95, 20),
-    ('RC456', 'AAA', 'Toshiba Remote', 16.50, 20);
+    ('Philips 43PUS6504/12', 'AAA', 'Philips Remote 1', 20.99, 20),
+    ('Nikkei NH3216SMART', 'AAA', 'Nikkei Basic Remote', 19.99, 20),
+    ('Samsung QE55Q60T', 'AA', 'Samsung Smart Remote 1', 29.99, 20),
+    ('Hitachi 43HAK6152', 'AAA', 'Hitachi Basic Remote', 20.00, 20),
+    ('Philips 50PUS7304/12', 'AA', 'Philips Smart Remote 1', 27.95, 20),
+    ('Philips 55PUS7805', 'AA', 'Philips Smart Remote X', 24.95, 20),
+    ('Brandt B2450HD', 'AAA', 'Brandt Remote', 14.95, 20),
+    ('Toshiba 32WL1A63DG', 'AAA', 'Toshiba Remote', 16.50, 20);
 
 INSERT INTO television(type, brand, name, price, refresh_rate, screen_type, screen_quality, smart_tv, wifi, voice_control, hdr, bluetooth, ambi_light, original_stock, original_stock_date, sold, remote_controller_id)
 VALUES

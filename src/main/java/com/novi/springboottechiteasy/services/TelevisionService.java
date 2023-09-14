@@ -3,7 +3,9 @@ package com.novi.springboottechiteasy.services;
 import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionDto;
 import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionInputDto;
 import com.novi.springboottechiteasy.exceptions.RecordNotFoundException;
+import com.novi.springboottechiteasy.models.RemoteController;
 import com.novi.springboottechiteasy.models.Television;
+import com.novi.springboottechiteasy.repositories.RemoteControllerRepository;
 import com.novi.springboottechiteasy.repositories.TelevisionRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +16,12 @@ import java.util.Optional;
 @Service
 public class TelevisionService {
     private final TelevisionRepository televisionRepository;
+    private final RemoteControllerRepository remoteControllerRepository;
 
-    public TelevisionService(TelevisionRepository televisionRepository) {
+
+    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository) {
         this.televisionRepository = televisionRepository;
+        this.remoteControllerRepository = remoteControllerRepository;
     }
 
     public List<TelevisionDto> getAllTelevisions() {
@@ -76,6 +81,24 @@ public class TelevisionService {
             Television saveTelevision = televisionRepository.save(thisTelevision);
 
             return transferToDto(saveTelevision);
+
+        } else {
+            throw new RecordNotFoundException("No television found with id: " + id);
+        }
+    }
+
+    public void assignRemoteControllerToTelevision(Long id, Long remoteControllerId) {
+        Optional<Television> television = televisionRepository.findById(id);
+        Optional<RemoteController> remote = remoteControllerRepository.findById(remoteControllerId);
+
+        if (television.isPresent() && remote.isPresent()) {
+            Television thisTelevision = television.get();
+            RemoteController thisRemote = remote.get();
+            thisTelevision.setRemoteController(thisRemote);
+            thisRemote.setTelevision(thisTelevision);
+
+            televisionRepository.save(thisTelevision);
+            remoteControllerRepository.save(thisRemote);
 
         } else {
             throw new RecordNotFoundException("No television found with id: " + id);
@@ -146,6 +169,11 @@ public class TelevisionService {
             if (thisTelevision.getSoldDates() != null) {
                 thisTelevision.setSoldDates(updatedTelevision.getSoldDates());
             }
+            if (updatedTelevision.getRemoteControllerId() != null) {
+                RemoteController remoteController = remoteControllerRepository.findById(updatedTelevision.getRemoteControllerId())
+                        .orElseThrow(() -> new RecordNotFoundException("No remote-controller found with id: " + updatedTelevision.getRemoteControllerId()));
+                thisTelevision.setRemoteController(remoteController);
+            }
 
             Television saveTelevision = televisionRepository.save(thisTelevision);
 
@@ -179,6 +207,10 @@ public class TelevisionService {
         dto.setSold(television.getSold());
         dto.setSoldDates(television.getSoldDates());
 
+        if (television.getRemoteController() != null) {
+            dto.setRemoteControllerId(television.getRemoteController().getId()); // De RemoteController Id gebruiken om de remote in de Television te plaatsen
+        }
+
         return dto;
     }
 
@@ -203,6 +235,12 @@ public class TelevisionService {
         tv.setOriginalStockDate(inputDto.getOriginalStockDate());
         tv.setSold(inputDto.getSold());
         tv.setSoldDates(inputDto.getSoldDates());
+
+        if (inputDto.getRemoteControllerId() != null) {
+            RemoteController remoteController = remoteControllerRepository.findById(inputDto.getRemoteControllerId())
+                    .orElseThrow(() -> new RecordNotFoundException("No remote-controller found with id: " + inputDto.getRemoteControllerId()));
+            tv.setRemoteController(remoteController);
+        }
 
         return tv;
     }

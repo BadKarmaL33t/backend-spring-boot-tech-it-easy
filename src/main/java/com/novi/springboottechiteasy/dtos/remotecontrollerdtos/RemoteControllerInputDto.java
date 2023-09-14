@@ -16,7 +16,7 @@ public class RemoteControllerInputDto {
     private Double price;
     @PositiveOrZero(message = "Initial stock can't have a negative value")
     private Integer originalStock;
-    private Television television;
+    private Long televisionId;
 
 
     public String getCompatibleWith() {
@@ -59,11 +59,11 @@ public class RemoteControllerInputDto {
         this.originalStock = originalStock;
     }
 
-    public Television getTelevision() {
-        return television;
+    public Long getTelevisionId() {
+        return televisionId;
     }
 
-    public void setTelevision(Television television) {
-        this.television = television;
+    public void setTelevisionId(Long televisionId) {
+        this.televisionId = televisionId;
     }
 }

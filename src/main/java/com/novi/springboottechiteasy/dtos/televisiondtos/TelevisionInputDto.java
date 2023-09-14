@@ -35,7 +35,7 @@ public class TelevisionInputDto {
     @PositiveOrZero(message = "Amount sold can't have a negative value")
     private Integer sold;
     private List<SoldDate> soldDates;
-    private RemoteController remoteController;
+    private Long remoteControllerId;
     private CiModule module;
     private List<WallBracket> wallBrackets;
 
@@ -184,9 +184,13 @@ public class TelevisionInputDto {
         this.soldDates = soldDates;
     }
 
-    public RemoteController getRemoteController() {return remoteController;}
+    public Long getRemoteControllerId() {
+        return remoteControllerId;
+    }
 
-    public void setRemoteController(RemoteController remoteController) {this.remoteController = remoteController;}
+    public void setRemoteControllerId(Long remoteControllerId) {
+        this.remoteControllerId = remoteControllerId;
+    }
 
     public CiModule getModule() {return module;}
 

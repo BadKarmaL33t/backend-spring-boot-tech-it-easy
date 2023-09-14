@@ -1,5 +1,6 @@
 package com.novi.springboottechiteasy.dtos.remotecontrollerdtos;
 
+import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionDto;
 import com.novi.springboottechiteasy.models.Television;
 
 public class RemoteControllerDto {
@@ -9,7 +10,7 @@ public class RemoteControllerDto {
     private String name;
     private Double price;
     private Integer originalStock;
-    private Television television;
+    private Long televisionId;
 
     public Long getId() {
         return id;
@@ -59,11 +60,11 @@ public class RemoteControllerDto {
         this.originalStock = originalStock;
     }
 
-    public Television getTelevision() {
-        return television;
+    public Long getTelevisionId() {
+        return televisionId;
     }
 
-    public void setTelevision(Television television) {
-        this.television = television;
+    public void setTelevisionId(Long televisionId) {
+        this.televisionId = televisionId;
     }
 }

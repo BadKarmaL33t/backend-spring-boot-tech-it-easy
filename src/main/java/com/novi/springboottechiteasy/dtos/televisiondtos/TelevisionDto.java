@@ -1,5 +1,8 @@
 package com.novi.springboottechiteasy.dtos.televisiondtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.novi.springboottechiteasy.dtos.cimoduledtos.CiModuleDto;
+import com.novi.springboottechiteasy.dtos.wallbracketdtos.WallBracketDto;
 import com.novi.springboottechiteasy.models.*;
 
 import java.util.Date;
@@ -26,9 +29,12 @@ public class TelevisionDto {
     private Date originalStockDate;
     private Integer sold;
     private List<SoldDate> soldDates;
-    private RemoteController remoteController;
-    private CiModule module;
-    private List<WallBracket> wallBrackets;
+
+    @JsonProperty("remoteControllerId") // Specify the name for the remoteControllerId field
+    private Long remoteControllerId;
+
+    private CiModuleDto module;
+    private List<WallBracketDto> wallBrackets;
 
     public Long getId() {
         return id;
@@ -182,15 +188,27 @@ public class TelevisionDto {
         this.soldDates = soldDates;
     }
 
-    public RemoteController getRemoteController() {return remoteController;}
+    public Long getRemoteControllerId() {
+        return remoteControllerId;
+    }
 
-    public void setRemoteController(RemoteController remoteController) {this.remoteController = remoteController;}
+    public void setRemoteControllerId(Long remoteControllerId) {
+        this.remoteControllerId = remoteControllerId;
+    }
 
-    public CiModule getModule() {return module;}
+    public CiModuleDto getModule() {
+        return module;
+    }
 
-    public void setModule(CiModule module) {this.module = module;}
+    public void setModule(CiModuleDto module) {
+        this.module = module;
+    }
 
-    public List<WallBracket> getWallBrackets() {return wallBrackets;}
+    public List<WallBracketDto> getWallBrackets() {
+        return wallBrackets;
+    }
 
-    public void setWallBrackets(List<WallBracket> wallBrackets) {this.wallBrackets = wallBrackets;}
+    public void setWallBrackets(List<WallBracketDto> wallBrackets) {
+        this.wallBrackets = wallBrackets;
+    }
 }
