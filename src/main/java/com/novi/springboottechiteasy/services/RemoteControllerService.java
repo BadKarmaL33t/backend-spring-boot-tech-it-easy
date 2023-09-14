@@ -8,7 +8,6 @@ import com.novi.springboottechiteasy.models.RemoteController;
 import com.novi.springboottechiteasy.models.Television;
 import com.novi.springboottechiteasy.repositories.RemoteControllerRepository;
 import com.novi.springboottechiteasy.repositories.TelevisionRepository;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import java.util.Optional;
 
 
 @Service
-@Lazy
 public class RemoteControllerService {
     private final RemoteControllerRepository remoteControllerRepository;
     private final TelevisionRepository televisionRepository;
@@ -90,27 +88,25 @@ public class RemoteControllerService {
         if (remote.isPresent()) {
 
             RemoteController thisRemote = remote.get();
-            if (thisRemote.getCompatibleWith() != null) {
+            if (updatedRemoteController.getCompatibleWith() != null) {
                 thisRemote.setCompatibleWith(updatedRemoteController.getCompatibleWith());
             }
-            if (thisRemote.getBatteryType() != null) {
+            if (updatedRemoteController.getBatteryType() != null) {
                 thisRemote.setBatteryType(updatedRemoteController.getBatteryType());
             }
-            if (thisRemote.getName() != null) {
+            if (updatedRemoteController.getName() != null) {
                 thisRemote.setName(updatedRemoteController.getName());
             }
-            if (thisRemote.getPrice() != null) {
+            if (updatedRemoteController.getPrice() != null) {
                 thisRemote.setPrice(updatedRemoteController.getPrice());
             }
-            if (thisRemote.getOriginalStock() != null) {
+            if (updatedRemoteController.getOriginalStock() != null) {
                 thisRemote.setOriginalStock(updatedRemoteController.getOriginalStock());
             }
             if (updatedRemoteController.getTelevisionId() != null) {
-                Long televisionId = updatedRemoteController.getTelevisionId();
-                Television television = televisionRepository.findById(televisionId)
-                        .orElseThrow(() -> new RecordNotFoundException("No television found with id: " + televisionId));
+                Television television = televisionRepository.findById(updatedRemoteController.getTelevisionId())
+                        .orElseThrow(() -> new RecordNotFoundException("No television found with id: " + updatedRemoteController.getTelevisionId()));
 
-                // Manually map the fields from TelevisionDto to Television entity
                 thisRemote.setTelevision(television);
             }
 

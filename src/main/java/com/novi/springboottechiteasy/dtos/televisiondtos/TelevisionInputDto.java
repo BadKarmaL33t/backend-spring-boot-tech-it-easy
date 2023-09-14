@@ -11,13 +11,13 @@ public class TelevisionInputDto {
 
     // validaties later verder aanvullen en testen.
 
-    @NotNull(message = "Tv type is required")
+//    @NotNull(message = "Tv type is required")
     private String type;
-    @NotNull(message = "Tv brand is required")
+//    @NotNull(message = "Tv brand is required")
     private String brand;
-    @Size(max = 20, message = "Tv names must stay between 0-20 characters")
+//    @Size(max = 20, message = "Tv names must stay between 0-20 characters")
     private String name;
-    @Positive(message = "Tv price can't be 0")
+//    @Positive(message = "Tv price can't be 0")
     private Double price;
     private List<ScreenSize> availableSizes;
     private Double refreshRate;
@@ -29,10 +29,10 @@ public class TelevisionInputDto {
     private Boolean hdr;
     private Boolean bluetooth;
     private Boolean ambiLight;
-    @PositiveOrZero(message = "Initial stock can't have a negative value")
+//    @PositiveOrZero(message = "Initial stock can't have a negative value")
     private Integer originalStock;
     private Date originalStockDate;
-    @PositiveOrZero(message = "Amount sold can't have a negative value")
+//    @PositiveOrZero(message = "Amount sold can't have a negative value")
     private Integer sold;
     private List<SoldDate> soldDates;
     private Long remoteControllerId;

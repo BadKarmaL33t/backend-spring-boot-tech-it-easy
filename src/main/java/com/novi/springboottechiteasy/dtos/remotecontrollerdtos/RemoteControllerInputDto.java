@@ -10,11 +10,11 @@ public class RemoteControllerInputDto {
 
     private String compatibleWith;
     private String batteryType;
-    @NotNull(message = "wall bracket name is required")
+//    @NotNull(message = "wall bracket name is required")
     private String name;
-    @Positive(message = "wall bracket price can't be 0")
+//    @Positive(message = "wall bracket price can't be 0")
     private Double price;
-    @PositiveOrZero(message = "Initial stock can't have a negative value")
+//    @PositiveOrZero(message = "Initial stock can't have a negative value")
     private Integer originalStock;
     private Long televisionId;
 

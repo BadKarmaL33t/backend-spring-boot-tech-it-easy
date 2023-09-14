@@ -115,63 +115,64 @@ public class TelevisionService {
         if (television.isPresent()) {
 
             Television thisTelevision = television.get();
-            if (thisTelevision.getType() != null) {
+            if (updatedTelevision.getType() != null) {
                 thisTelevision.setType(updatedTelevision.getType());
             }
-            if (thisTelevision.getBrand() != null) {
+            if (updatedTelevision.getBrand() != null) {
                 thisTelevision.setBrand(updatedTelevision.getBrand());
             }
-            if (thisTelevision.getName() != null) {
+            if (updatedTelevision.getName() != null) {
                 thisTelevision.setName(updatedTelevision.getName());
             }
-            if (thisTelevision.getPrice() != null) {
+            if (updatedTelevision.getPrice() != null) {
                 thisTelevision.setPrice(updatedTelevision.getPrice());
             }
-            if (thisTelevision.getAvailableSizes() != null) {
+            if (updatedTelevision.getAvailableSizes() != null) {
                 thisTelevision.setAvailableSizes(updatedTelevision.getAvailableSizes());
             }
-            if (thisTelevision.getRefreshRate() != null) {
+            if (updatedTelevision.getRefreshRate() != null) {
                 thisTelevision.setRefreshRate(updatedTelevision.getRefreshRate());
             }
-            if (thisTelevision.getScreenType() != null) {
+            if (updatedTelevision.getScreenType() != null) {
                 thisTelevision.setScreenType(updatedTelevision.getScreenType());
             }
-            if (thisTelevision.getScreenQuality() != null) {
+            if (updatedTelevision.getScreenQuality() != null) {
                 thisTelevision.setScreenQuality(updatedTelevision.getScreenQuality());
             }
-            if (thisTelevision.getSmartTv() != null) {
+            if (updatedTelevision.getSmartTv() != null) {
                 thisTelevision.setSmartTv(updatedTelevision.getSmartTv());
             }
-            if (thisTelevision.getWifi() != null) {
+            if (updatedTelevision.getWifi() != null) {
                 thisTelevision.setWifi(updatedTelevision.getWifi());
             }
-            if (thisTelevision.getVoiceControl() != null) {
+            if (updatedTelevision.getVoiceControl() != null) {
                 thisTelevision.setVoiceControl(updatedTelevision.getVoiceControl());
             }
-            if (thisTelevision.getHdr() != null) {
+            if (updatedTelevision.getHdr() != null) {
                 thisTelevision.setHdr(updatedTelevision.getHdr());
             }
-            if (thisTelevision.getBluetooth() != null) {
+            if (updatedTelevision.getBluetooth() != null) {
                 thisTelevision.setBluetooth(updatedTelevision.getBluetooth());
             }
-            if (thisTelevision.getAmbiLight() != null) {
+            if (updatedTelevision.getAmbiLight() != null) {
                 thisTelevision.setAmbiLight(updatedTelevision.getAmbiLight());
             }
-            if (thisTelevision.getOriginalStock() != null) {
+            if (updatedTelevision.getOriginalStock() != null) {
                 thisTelevision.setOriginalStock(updatedTelevision.getOriginalStock());
             }
-            if (thisTelevision.getOriginalStockDate() != null) {
+            if (updatedTelevision.getOriginalStockDate() != null) {
                 thisTelevision.setOriginalStockDate(updatedTelevision.getOriginalStockDate());
             }
-            if (thisTelevision.getSold() != null) {
+            if (updatedTelevision.getSold() != null) {
                 thisTelevision.setSold(updatedTelevision.getSold());
             }
-            if (thisTelevision.getSoldDates() != null) {
+            if (updatedTelevision.getSoldDates() != null) {
                 thisTelevision.setSoldDates(updatedTelevision.getSoldDates());
             }
             if (updatedTelevision.getRemoteControllerId() != null) {
                 RemoteController remoteController = remoteControllerRepository.findById(updatedTelevision.getRemoteControllerId())
                         .orElseThrow(() -> new RecordNotFoundException("No remote-controller found with id: " + updatedTelevision.getRemoteControllerId()));
+
                 thisTelevision.setRemoteController(remoteController);
             }
 
