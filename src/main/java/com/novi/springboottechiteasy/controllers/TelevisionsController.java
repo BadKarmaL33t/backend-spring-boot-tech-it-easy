@@ -64,6 +64,13 @@ public class TelevisionsController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("televisions/{id}/ci-module")
+    public ResponseEntity<TelevisionDto> assignCiModuleToTelevision(@PathVariable Long id, @Valid @RequestBody IdInputDto idInput) {
+        televisionService.assignCiModuleToTelevision(id, idInput.getId());
+
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/televisions/{id}")
     public ResponseEntity<Television> deleteTelevision(@PathVariable Long id) {
         televisionService.deleteTelevision(id);

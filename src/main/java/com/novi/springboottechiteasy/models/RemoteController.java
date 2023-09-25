@@ -15,24 +15,7 @@ public class RemoteController {
     @OneToOne(mappedBy = "remoteController")
     private Television television;
 
-    public RemoteController() {
-    }
 
-    public RemoteController(
-            Long id,
-            String compatibleWith,
-            String batteryType,
-            String name,
-            Double price,
-            Integer originalStock) {
-
-        this.id = id;
-        this.compatibleWith = compatibleWith;
-        this.batteryType = batteryType;
-        this.name = name;
-        this.price = price;
-        this.originalStock = originalStock;
-    }
 
     public Long getId() {
         return id;

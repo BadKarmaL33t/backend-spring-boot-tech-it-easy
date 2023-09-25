@@ -3,8 +3,11 @@ package com.novi.springboottechiteasy.services;
 import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionDto;
 import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionInputDto;
 import com.novi.springboottechiteasy.exceptions.RecordNotFoundException;
+import com.novi.springboottechiteasy.models.CiModule;
 import com.novi.springboottechiteasy.models.RemoteController;
+import com.novi.springboottechiteasy.models.SoldDate;
 import com.novi.springboottechiteasy.models.Television;
+import com.novi.springboottechiteasy.repositories.CiModuleRepository;
 import com.novi.springboottechiteasy.repositories.RemoteControllerRepository;
 import com.novi.springboottechiteasy.repositories.TelevisionRepository;
 import org.springframework.stereotype.Service;
@@ -17,11 +20,13 @@ import java.util.Optional;
 public class TelevisionService {
     private final TelevisionRepository televisionRepository;
     private final RemoteControllerRepository remoteControllerRepository;
+    private final CiModuleRepository ciModuleRepository;
 
 
-    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository) {
+    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository, CiModuleRepository ciModuleRepository) {
         this.televisionRepository = televisionRepository;
         this.remoteControllerRepository = remoteControllerRepository;
+        this.ciModuleRepository = ciModuleRepository;
     }
 
     public List<TelevisionDto> getAllTelevisions() {
@@ -76,7 +81,9 @@ public class TelevisionService {
             thisTelevision.setOriginalStock(newTelevision.getOriginalStock());
             thisTelevision.setOriginalStockDate(newTelevision.getOriginalStockDate());
             thisTelevision.setSold(newTelevision.getSold());
-            thisTelevision.setSoldDates(newTelevision.getSoldDates());
+            if (newTelevision.getSoldDates() != null) {
+                thisTelevision.getSoldDates().addAll(newTelevision.getSoldDates());
+            }
 
             Television saveTelevision = televisionRepository.save(thisTelevision);
 
@@ -100,6 +107,26 @@ public class TelevisionService {
             televisionRepository.save(thisTelevision);
             remoteControllerRepository.save(thisRemote);
 
+        } else {
+            throw new RecordNotFoundException("No television found with id: " + id);
+        }
+    }
+
+    public void assignCiModuleToTelevision(Long id, Long ciModuleId) {
+        Optional<Television> television = televisionRepository.findById(id);
+        Optional<CiModule> module = ciModuleRepository.findById(ciModuleId);
+
+        if (television.isPresent() && module.isPresent()) {
+            Television thisTelevision = television.get();
+            CiModule thisModule = module.get();
+
+            // Voeg de Television to aan de List compatibleTelevisions in de CiModule
+            thisModule.getCompatibleTelevisions().add(thisTelevision);
+            // Voeg de compatibleModule toe aan de Television
+            thisTelevision.setCompatibleModule(thisModule);
+
+            televisionRepository.save(thisTelevision);
+            ciModuleRepository.save(thisModule);
         } else {
             throw new RecordNotFoundException("No television found with id: " + id);
         }
@@ -167,7 +194,13 @@ public class TelevisionService {
                 thisTelevision.setSold(updatedTelevision.getSold());
             }
             if (updatedTelevision.getSoldDates() != null) {
-                thisTelevision.setSoldDates(updatedTelevision.getSoldDates());
+                for (SoldDate date : updatedTelevision.getSoldDates()) {
+                    SoldDate soldDate = new SoldDate();
+                    soldDate.setSoldDate(date.getSoldDate());
+                    soldDate.setTelevision(thisTelevision);
+                    thisTelevision.getSoldDates().add(soldDate);
+                }
+                televisionRepository.save(thisTelevision);
             }
             if (updatedTelevision.getRemoteControllerId() != null) {
                 RemoteController remoteController = remoteControllerRepository.findById(updatedTelevision.getRemoteControllerId())
@@ -211,6 +244,9 @@ public class TelevisionService {
         if (television.getRemoteController() != null) {
             dto.setRemoteControllerId(television.getRemoteController().getId()); // De RemoteController Id gebruiken om de remote in de Television te plaatsen
         }
+        if (television.getCompatibleModule() != null) {
+            dto.setCompatibleModuleId(television.getCompatibleModule().getId()); // De CiModule Id gebruiken om de remote in de Television te plaatsen
+        }
 
         return dto;
     }
@@ -235,12 +271,18 @@ public class TelevisionService {
         tv.setOriginalStock(inputDto.getOriginalStock());
         tv.setOriginalStockDate(inputDto.getOriginalStockDate());
         tv.setSold(inputDto.getSold());
+
         tv.setSoldDates(inputDto.getSoldDates());
 
         if (inputDto.getRemoteControllerId() != null) {
             RemoteController remoteController = remoteControllerRepository.findById(inputDto.getRemoteControllerId())
                     .orElseThrow(() -> new RecordNotFoundException("No remote-controller found with id: " + inputDto.getRemoteControllerId()));
             tv.setRemoteController(remoteController);
+        }
+        if (inputDto.getCompatibleModuleId() != null) {
+            CiModule ciModule = ciModuleRepository.findById(inputDto.getCompatibleModuleId())
+                    .orElseThrow(() -> new RecordNotFoundException("No CiModule found with id: " + inputDto.getCompatibleModuleId()));
+            tv.setCompatibleModule(ciModule);
         }
 
         return tv;

@@ -1,10 +1,5 @@
 package com.novi.springboottechiteasy.dtos.remotecontrollerdtos;
 
-import com.novi.springboottechiteasy.models.Television;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
-
 public class RemoteControllerInputDto {
     // validaties later verder aanvullen en testen.
 

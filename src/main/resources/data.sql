@@ -58,3 +58,14 @@ VALUES
     (65, 7),
     (55, 8),
     (65, 8);
+
+INSERT INTO ci_module(brand, type, price)
+VALUES
+    ('Quantis', 'Interactieve Module', 70),
+    ('SMiT', 'Interactieve Ziggo Module', 80);
+
+INSERT INTO wall_bracket(size, adjustable, name, price)
+VALUES
+    ('medium', false, 'Vogels', 34.99),
+    ('large', false, 'Vogels', 64.95),
+    ('premium', true, 'Vogels', 169);

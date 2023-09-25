@@ -1,21 +1,17 @@
 package com.novi.springboottechiteasy.dtos.cimoduledtos;
 
-import com.novi.springboottechiteasy.models.Television;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-
 import java.util.List;
 
 public class CiModuleInputDto {
     // validaties later verder aanvullen en testen.
 
-    @NotNull(message = "Tv brand is required")
+//    @NotNull(message = "Tv brand is required")
     private String brand;
-    @NotNull(message = "Tv type is required")
+//    @NotNull(message = "Tv type is required")
     private String type;
-    @Positive(message = "Tv price can't be 0")
+//    @Positive(message = "Tv price can't be 0")
     private Double price;
-    private List<Television> compatibleTelevisions;
+    private List<Long> compatibleTelevisionIds;
 
 
     public String getBrand() {
@@ -42,11 +38,11 @@ public class CiModuleInputDto {
         this.price = price;
     }
 
-    public List<Television> getCompatibleTelevisions() {
-        return compatibleTelevisions;
+    public List<Long> getCompatibleTelevisionIds() {
+        return compatibleTelevisionIds;
     }
 
-    public void setCompatibleTelevisions(List<Television> compatibleTelevisions) {
-        this.compatibleTelevisions = compatibleTelevisions;
+    public void setCompatibleTelevisionIds(List<Long> compatibleTelevisionIds) {
+        this.compatibleTelevisionIds = compatibleTelevisionIds;
     }
 }

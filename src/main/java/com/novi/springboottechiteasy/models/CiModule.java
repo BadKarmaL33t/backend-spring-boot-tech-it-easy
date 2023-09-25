@@ -13,23 +13,9 @@ public class CiModule {
     private String type;
     private Double price;
 
-    @OneToMany(mappedBy = "module")
+    @OneToMany(mappedBy = "compatibleModule", cascade = CascadeType.ALL)
     private List<Television> compatibleTelevisions;
 
-//    public CiModule() {
-//    }
-//
-//    public CiModule(
-//            Long id,
-//            String brand,
-//            String type,
-//            Double price) {
-//
-//        this.id = id;
-//        this.brand = brand;
-//        this.type = type;
-//        this.price = price;
-//    }
 
     public Long getId() {
         return id;
@@ -57,5 +43,13 @@ public class CiModule {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public List<Television> getCompatibleTelevisions() {
+        return compatibleTelevisions;
+    }
+
+    public void setCompatibleTelevisions(List<Television> compatibleTelevisions) {
+        this.compatibleTelevisions = compatibleTelevisions;
     }
 }

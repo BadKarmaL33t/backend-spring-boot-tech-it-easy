@@ -1,8 +1,5 @@
 package com.novi.springboottechiteasy.dtos.remotecontrollerdtos;
 
-import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionDto;
-import com.novi.springboottechiteasy.models.Television;
-
 public class RemoteControllerDto {
     private Long id;
     private String compatibleWith;

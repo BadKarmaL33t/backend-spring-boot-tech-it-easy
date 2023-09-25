@@ -68,4 +68,3 @@ public class RemoteControllerController {
         return ResponseEntity.ok().body(dto);
     }
 }
-

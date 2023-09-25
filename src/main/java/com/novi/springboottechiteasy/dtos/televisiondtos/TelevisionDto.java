@@ -1,7 +1,6 @@
 package com.novi.springboottechiteasy.dtos.televisiondtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.novi.springboottechiteasy.dtos.cimoduledtos.CiModuleDto;
 import com.novi.springboottechiteasy.dtos.wallbracketdtos.WallBracketDto;
 import com.novi.springboottechiteasy.models.*;
 
@@ -30,10 +29,10 @@ public class TelevisionDto {
     private Integer sold;
     private List<SoldDate> soldDates;
 
-    @JsonProperty("remoteControllerId") // Specify the name for the remoteControllerId field
+    @JsonProperty("remoteControllerId")
     private Long remoteControllerId;
 
-    private CiModuleDto module;
+    private Long compatibleModuleId;
     private List<WallBracketDto> wallBrackets;
 
     public Long getId() {
@@ -196,12 +195,12 @@ public class TelevisionDto {
         this.remoteControllerId = remoteControllerId;
     }
 
-    public CiModuleDto getModule() {
-        return module;
+    public Long getCompatibleModuleId() {
+        return compatibleModuleId;
     }
 
-    public void setModule(CiModuleDto module) {
-        this.module = module;
+    public void setCompatibleModuleId(Long compatibleModuleId) {
+        this.compatibleModuleId = compatibleModuleId;
     }
 
     public List<WallBracketDto> getWallBrackets() {

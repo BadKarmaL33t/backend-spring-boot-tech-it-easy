@@ -1,7 +1,6 @@
 package com.novi.springboottechiteasy.dtos.televisiondtos;
 
 import com.novi.springboottechiteasy.models.*;
-import jakarta.validation.constraints.*;
 
 import java.util.Date;
 import java.util.List;
@@ -36,7 +35,7 @@ public class TelevisionInputDto {
     private Integer sold;
     private List<SoldDate> soldDates;
     private Long remoteControllerId;
-    private CiModule module;
+    private Long compatibleModuleId;
     private List<WallBracket> wallBrackets;
 
 
@@ -192,9 +191,13 @@ public class TelevisionInputDto {
         this.remoteControllerId = remoteControllerId;
     }
 
-    public CiModule getModule() {return module;}
+    public Long getCompatibleModuleId() {
+        return compatibleModuleId;
+    }
 
-    public void setModule(CiModule module) {this.module = module;}
+    public void setCompatibleModuleId(Long compatibleModuleId) {
+        this.compatibleModuleId = compatibleModuleId;
+    }
 
     public List<WallBracket> getWallBrackets() {return wallBrackets;}
 

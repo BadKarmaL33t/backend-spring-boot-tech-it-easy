@@ -20,6 +20,7 @@ public class RemoteControllerService {
     private final RemoteControllerRepository remoteControllerRepository;
     private final TelevisionRepository televisionRepository;
     private final TelevisionService televisionService;
+
     public RemoteControllerService(RemoteControllerRepository remoteControllerRepository, TelevisionRepository televisionRepository, TelevisionService televisionService) {
         this.remoteControllerRepository = remoteControllerRepository;
         this.televisionService = televisionService;
@@ -79,8 +80,6 @@ public class RemoteControllerService {
     public void deleteRemoteController(Long id) {
         remoteControllerRepository.deleteById(id);
     }
-
-
 
     public RemoteControllerDto updateRemoteControllerDetails(Long id, RemoteControllerInputDto updatedRemoteController) {
         Optional<RemoteController> remote = remoteControllerRepository.findById(id);

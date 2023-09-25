@@ -1,5 +1,6 @@
 package com.novi.springboottechiteasy.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -32,14 +33,15 @@ public class Television {
     private Date originalStockDate;
     private Integer sold;
     @Temporal(TemporalType.DATE)
-    @OneToMany(mappedBy = "television")
+    @OneToMany(mappedBy = "television", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<SoldDate> soldDates;
     @OneToOne
     @JoinColumn(name = "remote_controller_id", nullable = false)
     private RemoteController remoteController;
     @ManyToOne
     @JoinColumn(name = "module_id")
-    private CiModule module;
+    private CiModule compatibleModule;
     @ManyToMany
     @JoinTable(
             name = "television_brackets",
@@ -201,9 +203,13 @@ public class Television {
 
     public void setRemoteController(RemoteController remoteController) {this.remoteController = remoteController;}
 
-    public CiModule getModule() {return module;}
+    public CiModule getCompatibleModule() {
+        return compatibleModule;
+    }
 
-    public void setModule(CiModule module) {this.module = module;}
+    public void setCompatibleModule(CiModule compatibleModule) {
+        this.compatibleModule = compatibleModule;
+    }
 
     public List<WallBracket> getWallBrackets() {return wallBrackets;}
 

@@ -1,7 +1,5 @@
 package com.novi.springboottechiteasy.dtos.cimoduledtos;
 
-import com.novi.springboottechiteasy.models.Television;
-
 import java.util.List;
 
 public class CiModuleDto {
@@ -9,7 +7,7 @@ public class CiModuleDto {
     private String brand;
     private String type;
     private Double price;
-    private List<Television> compatibleTelevisions;
+    private List<Long> compatibleTelevisionIds;
 
     public Long getId() {
         return id;
@@ -43,11 +41,11 @@ public class CiModuleDto {
         this.price = price;
     }
 
-    public List<Television> getCompatibleTelevisions() {
-        return compatibleTelevisions;
+    public List<Long> getCompatibleTelevisionIds() {
+        return compatibleTelevisionIds;
     }
 
-    public void setCompatibleTelevisions(List<Television> compatibleTelevisions) {
-        this.compatibleTelevisions = compatibleTelevisions;
+    public void setCompatibleTelevisionIds(List<Long> compatibleTelevisionIds) {
+        this.compatibleTelevisionIds = compatibleTelevisionIds;
     }
 }
