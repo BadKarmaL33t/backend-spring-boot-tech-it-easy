@@ -21,13 +21,15 @@ public class TelevisionService {
     private final TelevisionRepository televisionRepository;
     private final RemoteControllerRepository remoteControllerRepository;
     private final CiModuleRepository ciModuleRepository;
+    private final CiModuleDtoMapper ciModuleDtoMapper;
     private final WallBracketRepository wallBracketRepository;
 
 
-    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository, CiModuleRepository ciModuleRepository, WallBracketRepository wallBracketRepository) {
+    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository, CiModuleRepository ciModuleRepository, CiModuleDtoMapper ciModuleDtoMapper, WallBracketRepository wallBracketRepository) {
         this.televisionRepository = televisionRepository;
         this.remoteControllerRepository = remoteControllerRepository;
         this.ciModuleRepository = ciModuleRepository;
+        this.ciModuleDtoMapper = ciModuleDtoMapper;
         this.wallBracketRepository = wallBracketRepository;
     }
 
@@ -64,7 +66,7 @@ public class TelevisionService {
 
             if (compatibleModule != null) {
                 // transferToDto methode gebruiken om de CiModule naar een CiModuleDto om te zetten
-                return CiModuleDtoMapper.mapToDto(compatibleModule);
+                return ciModuleDtoMapper.mapToDto(compatibleModule);
             } else {
                 throw new RecordNotFoundException("No compatible module found for television with id: " + id);
             }

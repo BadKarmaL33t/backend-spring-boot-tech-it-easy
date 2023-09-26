@@ -32,7 +32,7 @@ public class CiModuleService {
         List<CiModuleDto> ciModuleDtos = new ArrayList<>();
 
         for (CiModule ciModule : ciModules) {
-            CiModuleDto dto = CiModuleDtoMapper.mapToDto(ciModule);
+            CiModuleDto dto = ciModuleDtoMapper.mapToDto(ciModule);
             ciModuleDtos.add(dto);
         }
         return ciModuleDtos;
@@ -44,7 +44,7 @@ public class CiModuleService {
         if (ciModule.isPresent()) {
             CiModule foundModule = ciModule.get();
 
-            return CiModuleDtoMapper.mapToDto(foundModule);
+            return ciModuleDtoMapper.mapToDto(foundModule);
         } else {
             throw new RecordNotFoundException("No remote-controller found with id: " + id);
         }
@@ -53,7 +53,7 @@ public class CiModuleService {
     public CiModuleDto addCiModule(CiModuleInputDto inputDto) {
         CiModule ciModule = transferToCiModule(inputDto);
         ciModuleRepository.save(ciModule);
-        return CiModuleDtoMapper.mapToDto(ciModule);
+        return ciModuleDtoMapper.mapToDto(ciModule);
     }
 
     public CiModuleDto updateCiModule(Long id, CiModuleInputDto newCiModule) {
@@ -68,7 +68,7 @@ public class CiModuleService {
 
             CiModule saveCiModule = ciModuleRepository.save(thisCiModule);
 
-            return CiModuleDtoMapper.mapToDto(saveCiModule);
+            return ciModuleDtoMapper.mapToDto(saveCiModule);
         } else {
             throw new RecordNotFoundException("No remote-controller found with id: " + id);
         }
@@ -96,7 +96,7 @@ public class CiModuleService {
 
             CiModule saveCiModule = ciModuleRepository.save(thisCiModule);
 
-            return CiModuleDtoMapper.mapToDto(saveCiModule);
+            return ciModuleDtoMapper.mapToDto(saveCiModule);
         } else {
             throw new RecordNotFoundException("No remote-controller found with id: " + id);
         }

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class CiModuleDtoMapper {
-    public static CiModuleDto mapToDto(CiModule ciModule) {
+    public CiModuleDto mapToDto(CiModule ciModule) {
         CiModuleDto dto = new CiModuleDto();
 
         dto.setId(ciModule.getId());
