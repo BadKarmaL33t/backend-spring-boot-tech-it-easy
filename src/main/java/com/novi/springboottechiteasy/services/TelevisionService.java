@@ -5,6 +5,7 @@ import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionDto;
 import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionInputDto;
 import com.novi.springboottechiteasy.exceptions.RecordNotFoundException;
 import com.novi.springboottechiteasy.mappers.CiModuleDtoMapper;
+import com.novi.springboottechiteasy.mappers.TelevisionDtoMapper;
 import com.novi.springboottechiteasy.models.*;
 import com.novi.springboottechiteasy.repositories.CiModuleRepository;
 import com.novi.springboottechiteasy.repositories.RemoteControllerRepository;
@@ -19,14 +20,16 @@ import java.util.Optional;
 @Service
 public class TelevisionService {
     private final TelevisionRepository televisionRepository;
+    private final TelevisionDtoMapper televisionDtoMapper;
     private final RemoteControllerRepository remoteControllerRepository;
     private final CiModuleRepository ciModuleRepository;
     private final CiModuleDtoMapper ciModuleDtoMapper;
     private final WallBracketRepository wallBracketRepository;
 
 
-    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository, CiModuleRepository ciModuleRepository, CiModuleDtoMapper ciModuleDtoMapper, WallBracketRepository wallBracketRepository) {
+    public TelevisionService(TelevisionRepository televisionRepository, TelevisionDtoMapper televisionDtoMapper, RemoteControllerRepository remoteControllerRepository, CiModuleRepository ciModuleRepository, CiModuleDtoMapper ciModuleDtoMapper, WallBracketRepository wallBracketRepository) {
         this.televisionRepository = televisionRepository;
+        this.televisionDtoMapper = televisionDtoMapper;
         this.remoteControllerRepository = remoteControllerRepository;
         this.ciModuleRepository = ciModuleRepository;
         this.ciModuleDtoMapper = ciModuleDtoMapper;
@@ -38,7 +41,7 @@ public class TelevisionService {
         List<TelevisionDto> televisionsDtos = new ArrayList<>();
 
         for (Television television : televisions) {
-            TelevisionDto dto = transferToDto(television);
+            TelevisionDto dto = televisionDtoMapper.mapToDto(television);
             televisionsDtos.add(dto);
         }
         return televisionsDtos;
@@ -50,7 +53,7 @@ public class TelevisionService {
         if (television.isPresent()) {
             Television foundTv = television.get();
 
-            return transferToDto(foundTv);
+            return televisionDtoMapper.mapToDto(foundTv);
         } else {
             throw new RecordNotFoundException("No television found with id: " + id);
         }
@@ -78,7 +81,7 @@ public class TelevisionService {
     public TelevisionDto addTelevision(TelevisionInputDto inputDto) {
         Television television = transferToTelevision(inputDto);
         televisionRepository.save(television);
-        return transferToDto(television);
+        return televisionDtoMapper.mapToDto(television);
     }
 
     public TelevisionDto updateTelevision(Long id, TelevisionInputDto newTelevision) {
@@ -110,7 +113,7 @@ public class TelevisionService {
 
             Television saveTelevision = televisionRepository.save(thisTelevision);
 
-            return transferToDto(saveTelevision);
+            return televisionDtoMapper.mapToDto(saveTelevision);
 
         } else {
             throw new RecordNotFoundException("No television found with id: " + id);
@@ -254,44 +257,11 @@ public class TelevisionService {
 
             Television saveTelevision = televisionRepository.save(thisTelevision);
 
-            return transferToDto(saveTelevision);
+            return televisionDtoMapper.mapToDto(saveTelevision);
 
         } else {
             throw new RecordNotFoundException("No television found with id: " + id);
         }
-    }
-
-    public TelevisionDto transferToDto(Television television) {
-        TelevisionDto dto = new TelevisionDto();
-
-        dto.setId(television.getId());
-        dto.setType(television.getType());
-        dto.setBrand(television.getBrand());
-        dto.setName(television.getName());
-        dto.setPrice(television.getPrice());
-        dto.setAvailableSizes(television.getAvailableSizes());
-        dto.setRefreshRate(television.getRefreshRate());
-        dto.setScreenType(television.getScreenType());
-        dto.setScreenQuality(television.getScreenQuality());
-        dto.setSmartTv(television.getSmartTv());
-        dto.setWifi(television.getWifi());
-        dto.setVoiceControl(television.getVoiceControl());
-        dto.setHdr(television.getHdr());
-        dto.setBluetooth(television.getBluetooth());
-        dto.setAmbiLight(television.getAmbiLight());
-        dto.setOriginalStock(television.getOriginalStock());
-        dto.setOriginalStockDate(television.getOriginalStockDate());
-        dto.setSold(television.getSold());
-        dto.setSoldDates(television.getSoldDates());
-
-        if (television.getRemoteController() != null) {
-            dto.setRemoteControllerId(television.getRemoteController().getId()); // De RemoteController Id gebruiken om de remote in de Television te plaatsen
-        }
-        if (television.getCompatibleModule() != null) {
-            dto.setCompatibleModuleId(television.getCompatibleModule().getId()); // De CiModule Id gebruiken om de remote in de Television te plaatsen
-        }
-
-        return dto;
     }
 
     public Television transferToTelevision(TelevisionInputDto inputDto) {

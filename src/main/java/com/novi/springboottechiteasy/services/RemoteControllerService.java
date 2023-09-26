@@ -4,6 +4,7 @@ import com.novi.springboottechiteasy.dtos.remotecontrollerdtos.RemoteControllerD
 import com.novi.springboottechiteasy.dtos.remotecontrollerdtos.RemoteControllerInputDto;
 import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionDto;
 import com.novi.springboottechiteasy.exceptions.RecordNotFoundException;
+import com.novi.springboottechiteasy.mappers.RemoteControllerDtoMapper;
 import com.novi.springboottechiteasy.models.RemoteController;
 import com.novi.springboottechiteasy.models.Television;
 import com.novi.springboottechiteasy.repositories.RemoteControllerRepository;
@@ -18,11 +19,13 @@ import java.util.Optional;
 @Service
 public class RemoteControllerService {
     private final RemoteControllerRepository remoteControllerRepository;
+    private final RemoteControllerDtoMapper remoteControllerDtoMapper;
     private final TelevisionRepository televisionRepository;
     private final TelevisionService televisionService;
 
-    public RemoteControllerService(RemoteControllerRepository remoteControllerRepository, TelevisionRepository televisionRepository, TelevisionService televisionService) {
+    public RemoteControllerService(RemoteControllerRepository remoteControllerRepository, RemoteControllerDtoMapper remoteControllerDtoMapper, TelevisionRepository televisionRepository, TelevisionService televisionService) {
         this.remoteControllerRepository = remoteControllerRepository;
+        this.remoteControllerDtoMapper = remoteControllerDtoMapper;
         this.televisionService = televisionService;
         this.televisionRepository = televisionRepository;
     }
@@ -32,7 +35,7 @@ public class RemoteControllerService {
         List<RemoteControllerDto> remoteControllerDtos = new ArrayList<>();
 
         for (RemoteController remoteController : remoteControllers) {
-            RemoteControllerDto dto = transferToDto(remoteController);
+            RemoteControllerDto dto = remoteControllerDtoMapper.mapToDto(remoteController);
             remoteControllerDtos.add(dto);
         }
         return remoteControllerDtos;
@@ -44,7 +47,7 @@ public class RemoteControllerService {
         if (remote.isPresent()) {
             RemoteController foundRemote = remote.get();
 
-            return transferToDto(foundRemote);
+            return remoteControllerDtoMapper.mapToDto(foundRemote);
         } else {
             throw new RecordNotFoundException("No remote-controller found with id: " + id);
         }
@@ -53,7 +56,7 @@ public class RemoteControllerService {
     public RemoteControllerDto addRemoteController(RemoteControllerInputDto inputDto) {
         RemoteController remote = transferToRemoteControl(inputDto);
         remoteControllerRepository.save(remote);
-        return transferToDto(remote);
+        return remoteControllerDtoMapper.mapToDto(remote);
     }
 
     public RemoteControllerDto updateRemoteController(Long id, RemoteControllerInputDto newRemote) {
@@ -70,7 +73,7 @@ public class RemoteControllerService {
 
             RemoteController saveRemote = remoteControllerRepository.save(thisRemote);
 
-            return transferToDto(saveRemote);
+            return remoteControllerDtoMapper.mapToDto(saveRemote);
 
         } else {
             throw new RecordNotFoundException("No remote-controller found with id: " + id);
@@ -111,28 +114,11 @@ public class RemoteControllerService {
 
             RemoteController saveRemote = remoteControllerRepository.save(thisRemote);
 
-            return transferToDto(saveRemote);
+            return remoteControllerDtoMapper.mapToDto(saveRemote);
 
         } else {
             throw new RecordNotFoundException("No remote-controller found with id: " + id);
         }
-    }
-
-    public RemoteControllerDto transferToDto(RemoteController remote) {
-        RemoteControllerDto dto = new RemoteControllerDto();
-
-        dto.setId(remote.getId());
-        dto.setCompatibleWith(remote.getCompatibleWith());
-        dto.setBatteryType(remote.getBatteryType());
-        dto.setName(remote.getName());
-        dto.setPrice(remote.getPrice());
-        dto.setOriginalStock(remote.getOriginalStock());
-
-        if (remote.getTelevision() != null) {
-            dto.setTelevisionId(remote.getTelevision().getId()); // De Television Id gebruiken om de televisie in de RemoteController te plaatsen
-        }
-
-        return dto;
     }
 
     public RemoteController transferToRemoteControl(RemoteControllerInputDto inputDto) {

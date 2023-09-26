@@ -3,6 +3,7 @@ package com.novi.springboottechiteasy.services;
 import com.novi.springboottechiteasy.dtos.wallbracketdtos.WallBracketDto;
 import com.novi.springboottechiteasy.dtos.wallbracketdtos.WallBracketInputDto;
 import com.novi.springboottechiteasy.exceptions.RecordNotFoundException;
+import com.novi.springboottechiteasy.mappers.WallBracketDtoMapper;
 import com.novi.springboottechiteasy.models.Television;
 import com.novi.springboottechiteasy.models.WallBracket;
 import com.novi.springboottechiteasy.repositories.TelevisionRepository;
@@ -12,15 +13,16 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class WallBracketService {
     private final WallBracketRepository wallBracketRepository;
+    private final WallBracketDtoMapper wallBracketDtoMapper;
     private final TelevisionRepository televisionRepository;
 
-    public WallBracketService(WallBracketRepository wallBracketRepository, TelevisionRepository televisionRepository) {
+    public WallBracketService(WallBracketRepository wallBracketRepository, WallBracketDtoMapper wallBracketDtoMapper, TelevisionRepository televisionRepository) {
         this.wallBracketRepository = wallBracketRepository;
+        this.wallBracketDtoMapper = wallBracketDtoMapper;
         this.televisionRepository = televisionRepository;
     }
 
@@ -29,7 +31,7 @@ public class WallBracketService {
         List<WallBracketDto> wallBracketDtos = new ArrayList<>();
 
         for (WallBracket wallBracket : wallBrackets) {
-            WallBracketDto dto = transferToDto(wallBracket);
+            WallBracketDto dto = wallBracketDtoMapper.mapToDto(wallBracket);
             wallBracketDtos.add(dto);
         }
         return wallBracketDtos;
@@ -41,7 +43,7 @@ public class WallBracketService {
         if (wallBracket.isPresent()) {
             WallBracket foundWallBracket = wallBracket.get();
 
-            return transferToDto(foundWallBracket);
+            return wallBracketDtoMapper.mapToDto(foundWallBracket);
         } else {
             throw new RecordNotFoundException("No remote-controller found with id: " + id);
         }
@@ -50,7 +52,7 @@ public class WallBracketService {
     public WallBracketDto addWallBracket(WallBracketInputDto inputDto) {
         WallBracket wallBracket = transferToWallBracket(inputDto);
         wallBracketRepository.save(wallBracket);
-        return transferToDto(wallBracket);
+        return wallBracketDtoMapper.mapToDto(wallBracket);
     }
 
     public WallBracketDto updateWallBracket(Long id, WallBracketInputDto newWallBracket) {
@@ -66,7 +68,7 @@ public class WallBracketService {
 
             WallBracket saveWallBracket = wallBracketRepository.save(thisWallBracket);
 
-            return transferToDto(saveWallBracket);
+            return wallBracketDtoMapper.mapToDto(saveWallBracket);
         } else {
             throw new RecordNotFoundException("No remote-controller found with id: " + id);
         }
@@ -97,30 +99,10 @@ public class WallBracketService {
 
             WallBracket saveWallBracket = wallBracketRepository.save(thisWallBracket);
 
-            return transferToDto(saveWallBracket);
+            return wallBracketDtoMapper.mapToDto(saveWallBracket);
         } else {
             throw new RecordNotFoundException("No remote-controller found with id: " + id);
         }
-    }
-
-    public WallBracketDto transferToDto(WallBracket wallBracket) {
-        WallBracketDto dto = new WallBracketDto();
-
-        dto.setId(wallBracket.getId());
-        dto.setSize(wallBracket.getSize());
-        dto.setAdjustable(wallBracket.getAdjustable());
-        dto.setName(wallBracket.getName());
-        dto.setPrice(wallBracket.getPrice());
-
-        if (wallBracket.getCompatibleTelevisions() != null) {
-            List<Long> compatibleTelevisionIds = wallBracket.getCompatibleTelevisions()
-                    .stream()
-                    .map(Television::getId)
-                    .collect(Collectors.toList());
-            dto.setCompatibleTelevisionIds(compatibleTelevisionIds);
-        }
-
-        return dto;
     }
 
     public WallBracket transferToWallBracket(WallBracketInputDto inputDto) {
