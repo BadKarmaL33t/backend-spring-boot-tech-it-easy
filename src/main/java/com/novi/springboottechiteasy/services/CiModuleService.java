@@ -2,10 +2,8 @@ package com.novi.springboottechiteasy.services;
 
 import com.novi.springboottechiteasy.dtos.cimoduledtos.CiModuleDto;
 import com.novi.springboottechiteasy.dtos.cimoduledtos.CiModuleInputDto;
-import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionDto;
 import com.novi.springboottechiteasy.exceptions.RecordNotFoundException;
 import com.novi.springboottechiteasy.models.CiModule;
-import com.novi.springboottechiteasy.models.RemoteController;
 import com.novi.springboottechiteasy.models.Television;
 import com.novi.springboottechiteasy.repositories.CiModuleRepository;
 import com.novi.springboottechiteasy.repositories.TelevisionRepository;
@@ -20,14 +18,12 @@ import java.util.stream.Collectors;
 public class CiModuleService {
     private final CiModuleRepository ciModuleRepository;
     private final TelevisionRepository televisionRepository;
-    private final TelevisionService televisionService;
+
 
     public CiModuleService(CiModuleRepository ciModuleRepository, TelevisionRepository televisionRepository, TelevisionService televisionService) {
         this.ciModuleRepository = ciModuleRepository;
         this.televisionRepository = televisionRepository;
-        this.televisionService = televisionService;
     }
-
 
     public List<CiModuleDto> getAllCiModules() {
         List<CiModule> ciModules = ciModuleRepository.findAll();

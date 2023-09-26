@@ -11,11 +11,11 @@ public class WallBracketInputDto {
 
     private String size;
     private Boolean adjustable;
-    @NotNull(message = "wall bracket name is required")
+//    @NotNull(message = "wall bracket name is required")
     private String name;
-    @Positive(message = "wall bracket price can't be 0")
+//    @Positive(message = "wall bracket price can't be 0")
     private Double price;
-    private List<Television> compatibleTelevisions;
+    private List<Long> compatibleTelevisionIds;
 
 
     public String getSize() {
@@ -50,11 +50,11 @@ public class WallBracketInputDto {
         this.price = price;
     }
 
-    public List<Television> getCompatibleTelevisions() {
-        return compatibleTelevisions;
+    public List<Long> getCompatibleTelevisionIds() {
+        return compatibleTelevisionIds;
     }
 
-    public void setCompatibleTelevisions(List<Television> compatibleTelevisions) {
-        this.compatibleTelevisions = compatibleTelevisions;
+    public void setCompatibleTelevisionIds(List<Long> compatibleTelevisionIds) {
+        this.compatibleTelevisionIds = compatibleTelevisionIds;
     }
 }

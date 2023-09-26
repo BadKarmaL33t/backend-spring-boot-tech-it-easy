@@ -10,7 +10,7 @@ public class WallBracketDto {
     private Boolean adjustable;
     private String name;
     private Double price;
-    private List<Television> compatibleTelevisions;
+    private List<Long> compatibleTelevisionIds;
 
     public Long getId() {
         return id;
@@ -52,11 +52,11 @@ public class WallBracketDto {
         this.price = price;
     }
 
-    public List<Television> getCompatibleTelevisions() {
-        return compatibleTelevisions;
+    public List<Long> getCompatibleTelevisionIds() {
+        return compatibleTelevisionIds;
     }
 
-    public void setCompatibleTelevisions(List<Television> compatibleTelevisions) {
-        this.compatibleTelevisions = compatibleTelevisions;
+    public void setCompatibleTelevisionIds(List<Long> compatibleTelevisionIds) {
+        this.compatibleTelevisionIds = compatibleTelevisionIds;
     }
 }

@@ -13,7 +13,7 @@ public class WallBracket {
     private Boolean adjustable;
     private String name;
     private Double price;
-    @ManyToMany(mappedBy = "wallBrackets")
+    @ManyToMany(mappedBy = "wallBrackets", cascade = CascadeType.ALL)
     private List<Television> compatibleTelevisions;
 
 
@@ -51,5 +51,13 @@ public class WallBracket {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public List<Television> getCompatibleTelevisions() {
+        return compatibleTelevisions;
+    }
+
+    public void setCompatibleTelevisions(List<Television> compatibleTelevisions) {
+        this.compatibleTelevisions = compatibleTelevisions;
     }
 }
