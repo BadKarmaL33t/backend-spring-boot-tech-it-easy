@@ -1,8 +1,10 @@
 package com.novi.springboottechiteasy.services;
 
+import com.novi.springboottechiteasy.dtos.cimoduledtos.CiModuleDto;
 import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionDto;
 import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionInputDto;
 import com.novi.springboottechiteasy.exceptions.RecordNotFoundException;
+import com.novi.springboottechiteasy.mappers.CiModuleDtoMapper;
 import com.novi.springboottechiteasy.models.*;
 import com.novi.springboottechiteasy.repositories.CiModuleRepository;
 import com.novi.springboottechiteasy.repositories.RemoteControllerRepository;
@@ -47,6 +49,25 @@ public class TelevisionService {
             Television foundTv = television.get();
 
             return transferToDto(foundTv);
+        } else {
+            throw new RecordNotFoundException("No television found with id: " + id);
+        }
+    }
+
+    public CiModuleDto getCompatibleCiModuleByTelevisionId(Long id) {
+        Optional<Television> television = televisionRepository.findById(id);
+
+        if (television.isPresent()) {
+            Television foundTv = television.get();
+
+            CiModule compatibleModule = foundTv.getCompatibleModule();
+
+            if (compatibleModule != null) {
+                // transferToDto methode gebruiken om de CiModule naar een CiModuleDto om te zetten
+                return CiModuleDtoMapper.mapToDto(compatibleModule);
+            } else {
+                throw new RecordNotFoundException("No compatible module found for television with id: " + id);
+            }
         } else {
             throw new RecordNotFoundException("No television found with id: " + id);
         }

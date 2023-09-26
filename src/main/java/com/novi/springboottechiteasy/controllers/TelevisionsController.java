@@ -1,9 +1,11 @@
 package com.novi.springboottechiteasy.controllers;
 
+import com.novi.springboottechiteasy.dtos.cimoduledtos.CiModuleDto;
 import com.novi.springboottechiteasy.dtos.id.IdInputDto;
 import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionDto;
 import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionInputDto;
 import com.novi.springboottechiteasy.models.Television;
+import com.novi.springboottechiteasy.repositories.CiModuleRepository;
 import com.novi.springboottechiteasy.services.TelevisionService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,7 @@ import java.util.List;
 public class TelevisionsController {
     private final TelevisionService televisionService;
 
-    public TelevisionsController(TelevisionService televisionService) {
+    public TelevisionsController(TelevisionService televisionService, CiModuleRepository ciModuleRepository) {
         this.televisionService = televisionService;
     }
 
@@ -35,6 +37,12 @@ public class TelevisionsController {
         TelevisionDto television = televisionService.getTelevisionById(id);
 
         return ResponseEntity.ok().body(television);
+    }
+
+    @GetMapping("/televisions/{id}/ci-module")
+    public ResponseEntity<CiModuleDto> getCompatibleCiModuleByTelevisionId(@PathVariable("id") Long id) {
+        CiModuleDto module = televisionService.getCompatibleCiModuleByTelevisionId(id);
+        return ResponseEntity.ok().body(module);
     }
 
     @PostMapping("/televisions")

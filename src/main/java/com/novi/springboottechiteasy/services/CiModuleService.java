@@ -3,6 +3,7 @@ package com.novi.springboottechiteasy.services;
 import com.novi.springboottechiteasy.dtos.cimoduledtos.CiModuleDto;
 import com.novi.springboottechiteasy.dtos.cimoduledtos.CiModuleInputDto;
 import com.novi.springboottechiteasy.exceptions.RecordNotFoundException;
+import com.novi.springboottechiteasy.mappers.CiModuleDtoMapper;
 import com.novi.springboottechiteasy.models.CiModule;
 import com.novi.springboottechiteasy.models.Television;
 import com.novi.springboottechiteasy.repositories.CiModuleRepository;
@@ -12,17 +13,18 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CiModuleService {
     private final CiModuleRepository ciModuleRepository;
+    private final CiModuleDtoMapper ciModuleDtoMapper;
     private final TelevisionRepository televisionRepository;
 
 
-    public CiModuleService(CiModuleRepository ciModuleRepository, TelevisionRepository televisionRepository, TelevisionService televisionService) {
+    public CiModuleService(CiModuleRepository ciModuleRepository, TelevisionRepository televisionRepository, TelevisionService televisionService, CiModuleDtoMapper ciModuleDtoMapper) {
         this.ciModuleRepository = ciModuleRepository;
         this.televisionRepository = televisionRepository;
+        this.ciModuleDtoMapper = ciModuleDtoMapper;
     }
 
     public List<CiModuleDto> getAllCiModules() {
@@ -30,7 +32,7 @@ public class CiModuleService {
         List<CiModuleDto> ciModuleDtos = new ArrayList<>();
 
         for (CiModule ciModule : ciModules) {
-            CiModuleDto dto = transferToDto(ciModule);
+            CiModuleDto dto = CiModuleDtoMapper.mapToDto(ciModule);
             ciModuleDtos.add(dto);
         }
         return ciModuleDtos;
@@ -42,7 +44,7 @@ public class CiModuleService {
         if (ciModule.isPresent()) {
             CiModule foundModule = ciModule.get();
 
-            return transferToDto(foundModule);
+            return CiModuleDtoMapper.mapToDto(foundModule);
         } else {
             throw new RecordNotFoundException("No remote-controller found with id: " + id);
         }
@@ -51,7 +53,7 @@ public class CiModuleService {
     public CiModuleDto addCiModule(CiModuleInputDto inputDto) {
         CiModule ciModule = transferToCiModule(inputDto);
         ciModuleRepository.save(ciModule);
-        return transferToDto(ciModule);
+        return CiModuleDtoMapper.mapToDto(ciModule);
     }
 
     public CiModuleDto updateCiModule(Long id, CiModuleInputDto newCiModule) {
@@ -66,7 +68,7 @@ public class CiModuleService {
 
             CiModule saveCiModule = ciModuleRepository.save(thisCiModule);
 
-            return transferToDto(saveCiModule);
+            return CiModuleDtoMapper.mapToDto(saveCiModule);
         } else {
             throw new RecordNotFoundException("No remote-controller found with id: " + id);
         }
@@ -94,29 +96,10 @@ public class CiModuleService {
 
             CiModule saveCiModule = ciModuleRepository.save(thisCiModule);
 
-            return transferToDto(saveCiModule);
+            return CiModuleDtoMapper.mapToDto(saveCiModule);
         } else {
             throw new RecordNotFoundException("No remote-controller found with id: " + id);
         }
-    }
-
-    public CiModuleDto transferToDto(CiModule ciModule) {
-        CiModuleDto dto = new CiModuleDto();
-
-        dto.setId(ciModule.getId());
-        dto.setBrand(ciModule.getBrand());
-        dto.setType(ciModule.getType());
-        dto.setPrice(ciModule.getPrice());
-
-        if (ciModule.getCompatibleTelevisions() != null) {
-            List<Long> compatibleTelevisionIds = ciModule.getCompatibleTelevisions()
-                    .stream()
-                    .map(Television::getId)
-                    .collect(Collectors.toList());
-            dto.setCompatibleTelevisionIds(compatibleTelevisionIds);
-        }
-
-        return dto;
     }
 
     public CiModule transferToCiModule(CiModuleInputDto inputDto) {
