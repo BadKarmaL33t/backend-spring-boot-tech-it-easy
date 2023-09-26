@@ -36,7 +36,7 @@ public class TelevisionInputDto {
     private List<SoldDate> soldDates;
     private Long remoteControllerId;
     private Long compatibleModuleId;
-    private List<WallBracket> wallBrackets;
+    private List<Long> compatibleWallBracketIds;
 
 
     public String getType() {
@@ -199,7 +199,11 @@ public class TelevisionInputDto {
         this.compatibleModuleId = compatibleModuleId;
     }
 
-    public List<WallBracket> getWallBrackets() {return wallBrackets;}
+    public List<Long> getCompatibleWallBracketIds() {
+        return compatibleWallBracketIds;
+    }
 
-    public void setWallBrackets(List<WallBracket> wallBrackets) {this.wallBrackets = wallBrackets;}
+    public void setCompatibleWallBracketIds(List<Long> compatibleWallBracketIds) {
+        this.compatibleWallBracketIds = compatibleWallBracketIds;
+    }
 }

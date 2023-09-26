@@ -44,11 +44,11 @@ public class Television {
     private CiModule compatibleModule;
     @ManyToMany
     @JoinTable(
-            name = "television_brackets",
-            joinColumns = @JoinColumn(name = "bracket_id"),
+            name = "television_wallbracket",
+            joinColumns = @JoinColumn(name = "wallbracket_id"),
             inverseJoinColumns = @JoinColumn(name = "television_id")
     )
-    List<WallBracket> wallBrackets;
+    List<WallBracket> compatibleWallBrackets;
 
 
     public Long getId() {
@@ -211,7 +211,11 @@ public class Television {
         this.compatibleModule = compatibleModule;
     }
 
-    public List<WallBracket> getWallBrackets() {return wallBrackets;}
+    public List<WallBracket> getCompatibleWallBrackets() {
+        return compatibleWallBrackets;
+    }
 
-    public void setWallBrackets(List<WallBracket> wallBrackets) {this.wallBrackets = wallBrackets;}
+    public void setCompatibleWallBrackets(List<WallBracket> compatibleWallBrackets) {
+        this.compatibleWallBrackets = compatibleWallBrackets;
+    }
 }

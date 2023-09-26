@@ -3,13 +3,11 @@ package com.novi.springboottechiteasy.services;
 import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionDto;
 import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionInputDto;
 import com.novi.springboottechiteasy.exceptions.RecordNotFoundException;
-import com.novi.springboottechiteasy.models.CiModule;
-import com.novi.springboottechiteasy.models.RemoteController;
-import com.novi.springboottechiteasy.models.SoldDate;
-import com.novi.springboottechiteasy.models.Television;
+import com.novi.springboottechiteasy.models.*;
 import com.novi.springboottechiteasy.repositories.CiModuleRepository;
 import com.novi.springboottechiteasy.repositories.RemoteControllerRepository;
 import com.novi.springboottechiteasy.repositories.TelevisionRepository;
+import com.novi.springboottechiteasy.repositories.WallBracketRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,12 +19,14 @@ public class TelevisionService {
     private final TelevisionRepository televisionRepository;
     private final RemoteControllerRepository remoteControllerRepository;
     private final CiModuleRepository ciModuleRepository;
+    private final WallBracketRepository wallBracketRepository;
 
 
-    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository, CiModuleRepository ciModuleRepository) {
+    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository, CiModuleRepository ciModuleRepository, WallBracketRepository wallBracketRepository) {
         this.televisionRepository = televisionRepository;
         this.remoteControllerRepository = remoteControllerRepository;
         this.ciModuleRepository = ciModuleRepository;
+        this.wallBracketRepository = wallBracketRepository;
     }
 
     public List<TelevisionDto> getAllTelevisions() {
@@ -127,6 +127,26 @@ public class TelevisionService {
 
             televisionRepository.save(thisTelevision);
             ciModuleRepository.save(thisModule);
+        } else {
+            throw new RecordNotFoundException("No television found with id: " + id);
+        }
+    }
+
+    public void assignWallBracketToTelevision(Long id, Long wallBracketId) {
+        Optional<Television> television = televisionRepository.findById(id);
+        Optional<WallBracket> wallBracket = wallBracketRepository.findById(wallBracketId);
+
+        if (television.isPresent() && wallBracket.isPresent()) {
+            Television thisTelevision = television.get();
+            WallBracket thisWallBracket = wallBracket.get();
+
+            // Voeg de Television to aan de List compatibleTelevisions in de WallBracket
+            thisWallBracket.getCompatibleTelevisions().add(thisTelevision);
+            // Voeg de compatibleWallBracket toe aan de compatibleWallBrackets List van deze Television
+            thisTelevision.getCompatibleWallBrackets().add(thisWallBracket);
+
+            televisionRepository.save(thisTelevision);
+            wallBracketRepository.save(thisWallBracket);
         } else {
             throw new RecordNotFoundException("No television found with id: " + id);
         }
