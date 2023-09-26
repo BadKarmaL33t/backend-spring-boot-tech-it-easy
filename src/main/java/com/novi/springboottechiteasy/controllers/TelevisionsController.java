@@ -2,8 +2,10 @@ package com.novi.springboottechiteasy.controllers;
 
 import com.novi.springboottechiteasy.dtos.cimoduledtos.CiModuleDto;
 import com.novi.springboottechiteasy.dtos.id.IdInputDto;
+import com.novi.springboottechiteasy.dtos.remotecontrollerdtos.RemoteControllerDto;
 import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionDto;
 import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionInputDto;
+import com.novi.springboottechiteasy.dtos.wallbracketdtos.WallBracketDto;
 import com.novi.springboottechiteasy.models.Television;
 import com.novi.springboottechiteasy.repositories.CiModuleRepository;
 import com.novi.springboottechiteasy.services.TelevisionService;
@@ -39,10 +41,22 @@ public class TelevisionsController {
         return ResponseEntity.ok().body(television);
     }
 
+    @GetMapping("/televisions/{id}/remote-controller")
+    public ResponseEntity<RemoteControllerDto> getCompatibleRemoteControllerByTelevisionId(@PathVariable("id") Long id) {
+        RemoteControllerDto remoteController = televisionService.getCompatibleRemoteControllerByTelevisionId(id);
+        return ResponseEntity.ok().body(remoteController);
+    }
+
     @GetMapping("/televisions/{id}/ci-module")
     public ResponseEntity<CiModuleDto> getCompatibleCiModuleByTelevisionId(@PathVariable("id") Long id) {
         CiModuleDto module = televisionService.getCompatibleCiModuleByTelevisionId(id);
         return ResponseEntity.ok().body(module);
+    }
+
+    @GetMapping("/televisions/{id}/wall-brackets")
+    public ResponseEntity<List<WallBracketDto>> getCompatibleWallBracketsByTelevisionId(@PathVariable("id") Long id) {
+        List<WallBracketDto> wallBrackets = televisionService.getCompatibleWallBracketsByTelevisionId(id);
+        return ResponseEntity.ok().body(wallBrackets);
     }
 
     @PostMapping("/televisions")

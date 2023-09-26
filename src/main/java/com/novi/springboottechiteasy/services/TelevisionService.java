@@ -1,11 +1,15 @@
 package com.novi.springboottechiteasy.services;
 
 import com.novi.springboottechiteasy.dtos.cimoduledtos.CiModuleDto;
+import com.novi.springboottechiteasy.dtos.remotecontrollerdtos.RemoteControllerDto;
 import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionDto;
 import com.novi.springboottechiteasy.dtos.televisiondtos.TelevisionInputDto;
+import com.novi.springboottechiteasy.dtos.wallbracketdtos.WallBracketDto;
 import com.novi.springboottechiteasy.exceptions.RecordNotFoundException;
 import com.novi.springboottechiteasy.mappers.CiModuleDtoMapper;
+import com.novi.springboottechiteasy.mappers.RemoteControllerDtoMapper;
 import com.novi.springboottechiteasy.mappers.TelevisionDtoMapper;
+import com.novi.springboottechiteasy.mappers.WallBracketDtoMapper;
 import com.novi.springboottechiteasy.models.*;
 import com.novi.springboottechiteasy.repositories.CiModuleRepository;
 import com.novi.springboottechiteasy.repositories.RemoteControllerRepository;
@@ -16,24 +20,29 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TelevisionService {
     private final TelevisionRepository televisionRepository;
     private final TelevisionDtoMapper televisionDtoMapper;
     private final RemoteControllerRepository remoteControllerRepository;
+    private final RemoteControllerDtoMapper remoteControllerDtoMapper;
     private final CiModuleRepository ciModuleRepository;
     private final CiModuleDtoMapper ciModuleDtoMapper;
     private final WallBracketRepository wallBracketRepository;
+    private final WallBracketDtoMapper wallBracketDtoMapper;
 
 
-    public TelevisionService(TelevisionRepository televisionRepository, TelevisionDtoMapper televisionDtoMapper, RemoteControllerRepository remoteControllerRepository, CiModuleRepository ciModuleRepository, CiModuleDtoMapper ciModuleDtoMapper, WallBracketRepository wallBracketRepository) {
+    public TelevisionService(TelevisionRepository televisionRepository, TelevisionDtoMapper televisionDtoMapper, RemoteControllerRepository remoteControllerRepository, RemoteControllerDtoMapper remoteControllerDtoMapper, CiModuleRepository ciModuleRepository, CiModuleDtoMapper ciModuleDtoMapper, WallBracketRepository wallBracketRepository, WallBracketDtoMapper wallBracketDtoMapper) {
         this.televisionRepository = televisionRepository;
         this.televisionDtoMapper = televisionDtoMapper;
         this.remoteControllerRepository = remoteControllerRepository;
+        this.remoteControllerDtoMapper = remoteControllerDtoMapper;
         this.ciModuleRepository = ciModuleRepository;
         this.ciModuleDtoMapper = ciModuleDtoMapper;
         this.wallBracketRepository = wallBracketRepository;
+        this.wallBracketDtoMapper = wallBracketDtoMapper;
     }
 
     public List<TelevisionDto> getAllTelevisions() {
@@ -59,6 +68,25 @@ public class TelevisionService {
         }
     }
 
+    public RemoteControllerDto getCompatibleRemoteControllerByTelevisionId(Long id) {
+        Optional<Television> television = televisionRepository.findById(id);
+
+        if (television.isPresent()) {
+            Television foundTv = television.get();
+
+            RemoteController remoteController = foundTv.getRemoteController();
+
+            if (remoteController != null) {
+                // mapToDto methode gebruiken om de RemoteController naar een RemoteControllerDto om te zetten
+                return remoteControllerDtoMapper.mapToDto(remoteController);
+            } else {
+                throw new RecordNotFoundException("No compatible remotecontroller found for television with id: " + id);
+            }
+        } else {
+            throw new RecordNotFoundException("No television found with id: " + id);
+        }
+    }
+
     public CiModuleDto getCompatibleCiModuleByTelevisionId(Long id) {
         Optional<Television> television = televisionRepository.findById(id);
 
@@ -68,7 +96,7 @@ public class TelevisionService {
             CiModule compatibleModule = foundTv.getCompatibleModule();
 
             if (compatibleModule != null) {
-                // transferToDto methode gebruiken om de CiModule naar een CiModuleDto om te zetten
+                // mapToDto methode gebruiken om de CiModule naar een CiModuleDto om te zetten
                 return ciModuleDtoMapper.mapToDto(compatibleModule);
             } else {
                 throw new RecordNotFoundException("No compatible module found for television with id: " + id);
@@ -76,6 +104,24 @@ public class TelevisionService {
         } else {
             throw new RecordNotFoundException("No television found with id: " + id);
         }
+    }
+
+    public List<WallBracketDto> getCompatibleWallBracketsByTelevisionId(Long id) {
+        // Maak gebruik van Optional's ifPresentOrElse om beide ifs te reviewen
+        return televisionRepository.findById(id)
+                .map(foundTv -> {
+                    List<WallBracket> compatibleWallBrackets = foundTv.getCompatibleWallBrackets();
+
+                    if (compatibleWallBrackets != null && !compatibleWallBrackets.isEmpty()) {
+                        // Gebruik streams om gevonden WallBrackets naar WallBracketDto te mappen met de DtoMapper
+                        return compatibleWallBrackets.stream()
+                                .map(wallBracketDtoMapper::mapToDto)
+                                .collect(Collectors.toList());
+                    } else {
+                        throw new RecordNotFoundException("No compatible wall brackets found for television with id: " + id);
+                    }
+                })
+                .orElseThrow(() -> new RecordNotFoundException("No television found with id: " + id));
     }
 
     public TelevisionDto addTelevision(TelevisionInputDto inputDto) {
