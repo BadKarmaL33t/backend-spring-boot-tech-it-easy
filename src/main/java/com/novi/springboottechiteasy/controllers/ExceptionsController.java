@@ -1,7 +1,9 @@
 package com.novi.springboottechiteasy.controllers;
 
+import com.novi.springboottechiteasy.exceptions.BadRequestException;
 import com.novi.springboottechiteasy.exceptions.RecordNotFoundException;
 import com.novi.springboottechiteasy.exceptions.TelevisionNameTooLongException;
+import com.novi.springboottechiteasy.exceptions.UsernameNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,7 +24,17 @@ public class ExceptionsController {
 
         @ExceptionHandler(value = TelevisionNameTooLongException.class)
         public ResponseEntity<String> exception(TelevisionNameTooLongException exception) {
+            return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        @ExceptionHandler(value = BadRequestException.class)
+        public ResponseEntity<String> exception(BadRequestException exception) {
             return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        @ExceptionHandler(value = UsernameNotFoundException.class)
+        public ResponseEntity<String> exception(UsernameNotFoundException exception) {
+            return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 }
